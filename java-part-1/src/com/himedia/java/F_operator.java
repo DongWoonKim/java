@@ -180,6 +180,21 @@ public class F_operator {
 
     // 복합 대입 연산자
     // +=, -=, *=, /=, %=
+    public static void exam9() {
+        int num = 5;
+        num += 1; // num = num + 1;
+        System.out.println(num);
+        num -= 2;
+        System.out.println(num);
+        num /= 2; // num = num / 2;
+        System.out.println(num);
+        num *= 2;
+        System.out.println(num);
+        num %= 3;
+        System.out.println(num);
+        num += (3 + 5);
+        System.out.println(num);
+    }
 
     public static void main(String[] args) {
         exam8();

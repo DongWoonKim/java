@@ -210,8 +210,33 @@ public class H_loop {
         System.out.println("감사합니다.");
     }
 
+    public static void exam19() {
+        int i = 0;
+        while ( i++ < 10 ) {
+            if (i % 2 != 0) continue;
+            System.out.println(i);
+        }
+    }
+
+    // * do-while : 최소한 한번은 수행을 보장한다.
+    /*
+        do {
+            // 조건식의 연산결과가 참일 때 수행
+        } while (조건식);
+     */
+    public static void exam20() {
+        int i = 0;
+        while ( i != 0) {
+            System.out.println("while문입니다.");
+        }
+
+        do {
+            System.out.println("do-while문입니다.");
+        } while (i!=0);
+    }
+
     public static void main(String[] args) {
-        exam18();
+        exam20();
     }
 
 }

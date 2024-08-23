@@ -1,5 +1,7 @@
 package com.himedia.java;
 
+import java.util.Scanner;
+
 // * 반복문
 // 어떤 작업이 반복적으로 수행되도록 할 때 사용된다.
 public class H_loop {
@@ -108,8 +110,98 @@ public class H_loop {
         }
     }
 
+    // * while문
+    /*
+        while (조건식) {
+            // 조건식의 연산결과가 참(true)인 동안, 반복될 문장을 적는다.
+        }
+     */
+    public static void exam12() {
+        int cnt = 0;
+        while (cnt <= 10) {
+            System.out.println(cnt);
+            cnt++;
+        }
+    }
+
+    public static void exam13() {
+        System.out.println("==== 구구단 2단 ====");
+        // -> while
+        int j = 1;
+        while (j < 10) {
+            System.out.println("2 * " + j + " = " + 2 * j);
+            j++;
+        }
+    }
+
+    public static void exam14() {
+        System.out.println("=== 구구단 전체 ===");
+        // while 중첩 사용할 것.
+        int i = 2;
+        while (i < 10) {
+            System.out.printf("%d단", i);
+            int j = 1;
+            while (j < 10) {
+                System.out.printf("%d * %d = %d\n", i, j, i * j);
+                j++;
+            }
+            i++;
+        }
+    }
+
+    public static void exam15() {
+        int i = 10;
+        while ( true ) {
+            // i가 5가되면 탈출
+            if ( i == 5 ) break;
+            System.out.println(i--);
+        }
+    }
+
+    public static void exam16() {
+        int i = 10;
+
+        while ( --i > 0 ) {
+            System.out.println(i);
+        }
+        System.out.println("==============");
+        i = 10;
+        while ( i-- > 0) {
+            System.out.println(i);
+        }
+
+    }
+
+    public static void exam17() {
+        // 사용자한테 정수 값을 입력 받은뒤,
+        // 1부터 입력받은 정수까지의 합을 구해서 출력하세요.
+        // 다시 사용자한테 정수를 입력받도록...
+        // 사용자가 0을 누르면 탈출한다....
+        Scanner sc = new Scanner(System.in);
+        while (true) {
+            System.out.println("합을 구할 정수를 입력하세요.(만약 종료를 원하면 0을 누르세요.)");
+            int choice = sc.nextInt();
+
+            if (choice == 0) break;
+
+            int sum = 0;
+            for ( int i = 1; i <= choice; ++i ) {
+                sum += i;
+            }
+            System.out.println("결과 : " + sum);
+        }
+        System.out.println("감사합니다.");
+    }
+
+    public static void exam18() {
+        // 사용자가 원하는 구구단 출력하기.
+        // 0을 누르면 종료시킨다.
+        
+
+    }
+
     public static void main(String[] args) {
-        exam11();
+        exam16();
     }
 
 }

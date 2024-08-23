@@ -28,20 +28,39 @@ public class I_vending_machine {
         return sc.nextInt();
     }
 
+    public static int calcMoney(int totalMoney, int price) {
+        return totalMoney - price;
+    }
+
+    public static void printException() {
+        System.out.println("잔돈이 부족합니다.");
+    }
+
     public static void main(String[] args) {
         int totalMoney = 0;
 
         while (true) {
             printMenu(totalMoney);
             int myChoice = getChoice();
+            int result = -1;
             switch (myChoice) {
                 case 1:
+                    result = calcMoney(totalMoney, COKE);
+                    if ( result < 0 ) {
+                        printException();
+                    } else {
+                        totalMoney = result;
+                        System.out.println("콜라가 나왔습니다.");
+                    }
                     break;
                 case 2:
+                    System.out.println("사이다가 나왔습니다.");
                     break;
                 case 3:
+                    System.out.println("환타가 나왔습니다.");
                     break;
                 case 4:
+                    System.out.println("물이 나왔습니다.");
                     break;
                 case 5:
                     // getMoney

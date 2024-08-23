@@ -196,12 +196,22 @@ public class H_loop {
     public static void exam18() {
         // 사용자가 원하는 구구단 출력하기.
         // 0을 누르면 종료시킨다.
-        
+        Scanner sc = new Scanner(System.in);
+        while (true) {
+            System.out.println("원하는 구구단의 단을 입력하세요.(만약 종료를 원하면 0을 누르세요.)");
+            int choice = sc.nextInt();
 
+            if (choice == 0) break;
+
+            for ( int i = 1; i <= 9; ++i ) {
+                System.out.println(choice + " * " + i + " = " + choice * i);
+            }
+        }
+        System.out.println("감사합니다.");
     }
 
     public static void main(String[] args) {
-        exam16();
+        exam18();
     }
 
 }

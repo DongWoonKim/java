@@ -162,6 +162,14 @@ public class K_member_management {
         System.out.println("수정이 완료되었습니다.");
     }
 
+    public static void deleteMember(String[][] members) {
+        // 1. 이메일로 삭제할 회원을 찾는다.
+        // 2. 찾았으면 찾은 행정보(인덱스)값을 별도로 가지고있는다.
+        // 2-1. 찾지 못했으면 안내 문구를 출력후 종료시킨다.
+        // 3. 찾은 행 뒤의 행들을 모두 땡긴 후, 마지막 행을 null 처리한다.
+        // 4. 전체 회원수도 차감 시킨다.
+    }
+
     public static void main(String[] args) {
         // 사용자로부터 요금제 선택을 받아서
         // 해당 크기에 맞는 2차원배열을 생성해주세요.
@@ -192,6 +200,7 @@ public class K_member_management {
                     updateMember(members);
                     break;
                 case 6:
+                    deleteMember(members);
                     break;
                 case 7:
                     System.out.println("이용해주셔서 감사합니다.");

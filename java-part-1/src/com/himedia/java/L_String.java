@@ -83,7 +83,85 @@ public class L_String {
         System.out.println(str1.equals(str3));
     }
 
+    // 6. contains(CharSequence s)
+    // 설명 : 문자열이 특정 문자열을 포함하고 있는지 확인한다.
+    // 활용 : 문자열 내 특정 패턴이나 부분 문자열이 존재하는지 확인할 때 사용한다.
+    public static void exam6() {
+        String str = "Hello World!";
+        boolean result = str.contains("World");
+        System.out.println(result);
+    }
+
+    // 7. replace
+    // 설명 : 문자열 내의 특정 문자 또는 문자열을 다른 문자열로 대체한다.
+    // 활용 : 문자열 변환 문제나 패턴 치환 문제에서 유용하다.
+    public static void exam7() {
+        String str = "hello";
+        String newStr = str.replace('l', 'p');
+        System.out.println(newStr);
+    }
+
+    // 8. indexOf(String str), lastIndexOf(String str)
+    // 설명 : 특정 문자열이 처음 또는 마지막으로 나타나는 위치를 반환한다.
+    // 활용 : 특정 패턴이나 부분 문자열의 위치를 찾을 때 사용한다.
+    public static void exam8() {
+        String str = "hello";
+        int idx = str.indexOf("l");
+        System.out.println(idx);
+        idx = str.lastIndexOf("l");
+        System.out.println(idx);
+    }
+
+    // 9. StringBuilder, StringBuffer
+    // 설명 : StringBuilder와 StringBuffer는 가변(mutable) 문자열을 다루기 위한 클래스이다.
+    // StringBuilder는 성능이 우수하며, StringBuffer는 스레드 안전한 버전이다.
+    // 활용 : 반복적인 문자열 수정이 필요한 문제에서 성능을 최적화하기 위해 사용한다.
+    public static void exam9() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Hello");
+        sb.append(" World");
+        String result = sb.toString();
+        System.out.println(result);
+    }
+
+    // 10. reverse()
+    // 설명 : 문자열을 뒤집는다. String 자체에는 reverse()메서드가 없지만,
+    // StringBuilder를 사용하여 문자열을 뒤집을 수 있다.
+    // 효과 : 문자열을 뒤집는 문제에서 자주 사용된다.
+    public static void exam10() {
+        String str = "Hello";
+        StringBuilder sb = new StringBuilder(str);
+        String reversed = sb.reverse().toString();
+        System.out.println(reversed);
+
+        System.out.println(
+                new StringBuilder(str).reverse()
+        );
+    }
+
+    // 11. compareTo(String anotherString)
+    // 설명 : 두 문자열을 사전적으로 비교하여,
+    // 현재 문자열이 더 작으면 음수, 같으면 0, 더 크면 양수를 반환한다.
+    // 효과 : 문자열 정렬, 사전 순 비교, 순위 매기기 등에서 유용하다.
+    public static void exam11() {
+        String str1 = "apple";
+        String str2 = "banana";
+        int result = str1.compareTo(str2);
+        System.out.println(result);
+    }
+
+    // 12. toLowerCase() 및 toUpperCase()
+    // 설명 : 문자열을 소문자 또는 대문자로 변환한다.
+    // 효과 : 대소문자 구분 없이 문자열을 비교하거나 특정 형식으로 변환할 때 사용한다.
+    public static void exam12() {
+        String str = "Hello World!";
+        String lower = str.toLowerCase();
+        String upper = str.toUpperCase();
+        System.out.println(lower);
+        System.out.println(upper);
+    }
+
     public static void main(String[] args) {
-        exam4();
+        exam12();
     }
 }

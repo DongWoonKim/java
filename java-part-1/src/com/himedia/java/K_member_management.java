@@ -123,6 +123,45 @@ public class K_member_management {
         }
     }
 
+    public static void updateMember(String[][] members) {
+        // 1. 이메일 조회 -> 사용자로부터 이메일을 받아온다.
+        // 2. 조회
+        // 3. 찾았으면 해당 인덱스값을 가지고 있는다.
+        // 3-1. 찾지 못했으면 "찾으시는 회원이 없습니다"를 출력 후 updateMember함수 종료.
+        // 4. 새로운 이름, 이메일, 연락처 입력받는다.
+        // 5. 찾은 인덱스에 값을 갱신시켜준다.
+        Scanner sc = new Scanner(System.in);
+        System.out.println("[수정] 이메일을 입력하세요.");
+        String email = sc.nextLine();
+        int idx = -1;
+        
+        for ( int i = 0; i < members.length; i++ ) {
+            if (email.equals(members[i][1])) {
+                idx = i;
+                break;
+            }
+        }
+        
+        if ( idx == -1 ) {
+            System.out.println("찾으시는 회원이 없습니다");
+            return;
+        }
+
+        // 해당 행의 속한 회원 정보를 갱신
+        System.out.println("변경할 이름을 입력하세요.");
+        String newName = sc.nextLine();
+        System.out.println("변경할 이메일을 입력하세요.");
+        String newEmail = sc.nextLine();
+        System.out.println("변경할 연락처를 입력하세요.");
+        String newPhone = sc.nextLine();
+
+        members[idx][0] = newName;
+        members[idx][1] = newEmail;
+        members[idx][2] = newPhone;
+
+        System.out.println("수정이 완료되었습니다.");
+    }
+
     public static void main(String[] args) {
         // 사용자로부터 요금제 선택을 받아서
         // 해당 크기에 맞는 2차원배열을 생성해주세요.
@@ -150,6 +189,7 @@ public class K_member_management {
                     selectAll(members);
                     break;
                 case 5:
+                    updateMember(members);
                     break;
                 case 6:
                     break;

@@ -184,9 +184,19 @@ public class K_member_management {
             System.out.println("찾으시는 회원이 없습니다.");
             return;
         }
-        // -> 삭제 로직
-        
 
+        // -> 삭제 로직
+        members[idx][0] = null;
+        members[idx][1] = null;
+        members[idx][2] = null;
+
+        for ( int i = idx; i < members.length - 1; i++ ) {
+            members[i][0] = members[i + 1][0];
+            members[i][1] = members[i + 1][1];
+            members[i][2] = members[i + 1][2];
+        }
+
+        totalMemberCnt--;
     }
 
     public static void main(String[] args) {

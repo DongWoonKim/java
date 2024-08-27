@@ -1,5 +1,7 @@
 package com.himedia.practice;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
 public class M_account {
@@ -88,7 +90,37 @@ public class M_account {
             historyIdx = HISTORY_MAX_LENGTH - 1;
         }
 
-        histories[historyIdx] = message;
+        histories[historyIdx] = message + " - " + getNowDateTime();
+    }
+
+    public static String getNowDateTime() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        return LocalDateTime.now().format(formatter);
+    }
+
+    public static void printHistory() {
+        System.out.println("======= 내역조회 =======");
+        for (int i = historyIdx; i >= 0; i--) {
+            if (histories[i] == null) continue;
+            System.out.println(histories[i]);
+        }
+    }
+
+    public static void subMoney() {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("출금할 금액을 입력하세요.");
+        int subMoney = sc.nextInt();
+
+        if (subMoney > totalMoney) {
+            System.out.println("출금할 금액이 부족합니다.");
+            return;
+        }
+
+        totalMoney -= subMoney;
+
+        // 히스토리 추가
+        String historyMessage = "[출금] " + subMoney + "원";
+        manageHistory(historyMessage);
     }
 
     public static void main(String[] args) {
@@ -99,6 +131,12 @@ public class M_account {
             switch (choice) {
                 case 1:
                     addMoney();
+                    break;
+                case 2:
+                    subMoney();
+                    break;
+                case 3:
+                    printHistory();
                     break;
                 case 4:
                     System.out.println("이용해주셔서 감사합니다.");

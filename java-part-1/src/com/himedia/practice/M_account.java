@@ -5,9 +5,14 @@ import java.util.Scanner;
 public class M_account {
 
     public static final int ACCOUNT_MAX_LENGTH = 5;
+    public static final int HISTORY_MAX_LENGTH = 5;
 
     public static String userName;
     public static String userAccount;
+    public static int totalMoney = 0;
+
+    public static String[] histories = new String[HISTORY_MAX_LENGTH];
+    public static int historyIdx = -1;
 
     public static void printCreateAccountMenu() {
         System.out.println("===========계좌 생성===========");
@@ -50,8 +55,57 @@ public class M_account {
         return false;
     }
 
+    public static int printMenu() {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("========== 메뉴 ==========");
+        System.out.println("[계좌번호] : " + userAccount + ", [이름] : " + userName);
+        System.out.println("[1]입금 [2]출금 [3]내역조회 [4]프로그램종료");
+        System.out.println("현재금액 - " + totalMoney + "원");
+        System.out.println("원하시는 메뉴를 선택하세요.");
+
+        return sc.nextInt();
+    }
+
+    public static void addMoney() {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("입금할 금액을 입력하세요.");
+        int getMoney = sc.nextInt();
+        totalMoney += getMoney;
+        
+        // 히스토리 추가
+        String historyMessage = "[입금] " + getMoney + "원";
+        manageHistory(historyMessage);
+    }
+
+    public static void manageHistory(String message) {
+        historyIdx++;
+
+        if(historyIdx >= HISTORY_MAX_LENGTH) {
+            // 하나씩 땡긴다.
+            for (int i = 0; i < HISTORY_MAX_LENGTH - 1; i++) {
+                histories[i] = histories[i + 1];
+            }
+            historyIdx = HISTORY_MAX_LENGTH - 1;
+        }
+
+        histories[historyIdx] = message;
+    }
+
     public static void main(String[] args) {
         printCreateAccountMenu();
+
+        while (true) {
+            int choice = printMenu();
+            switch (choice) {
+                case 1:
+                    addMoney();
+                    break;
+                case 4:
+                    System.out.println("이용해주셔서 감사합니다.");
+                    return;
+            }
+        }
+
     }
 
 }

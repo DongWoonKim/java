@@ -168,6 +168,25 @@ public class K_member_management {
         // 2-1. 찾지 못했으면 안내 문구를 출력후 종료시킨다.
         // 3. 찾은 행 뒤의 행들을 모두 땡긴 후, 마지막 행을 null 처리한다.
         // 4. 전체 회원수도 차감 시킨다.
+        Scanner sc = new Scanner(System.in);
+        System.out.println("[삭제] 이메일을 입력하세요.");
+        String email = sc.nextLine();
+        int idx = -1;
+
+        for ( int i = 0; i < members.length; i++ ) {
+            if (email.equals(members[i][1])) {
+                idx = i;
+                break;
+            }
+        }
+
+        if ( idx == -1 ) {
+            System.out.println("찾으시는 회원이 없습니다.");
+            return;
+        }
+        // -> 삭제 로직
+        
+
     }
 
     public static void main(String[] args) {

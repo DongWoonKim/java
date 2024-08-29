@@ -24,15 +24,18 @@ public class D_static_method {
         // add
         // 호출
         // 출력
-
+        double add = D_calc.add(2.1, 3.2);
+        System.out.println(add);
         // multi
         // 호출
         // 출력
+        double multi = D_calc.multi(3, 2);
+        System.out.println(multi);
 
         // circleArea
         // 호출
         // 출력
-
+        System.out.println(D_calc.circleArea(4));
     }
 
 }

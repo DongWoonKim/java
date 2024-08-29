@@ -29,7 +29,7 @@ public class C_jvm_memory {
     public static void main(String[] args) {
         C_jvm_memory jvm = new C_jvm_memory();
 //        jvm.exam1();
-        jvm.exam2();
+        jvm.exam4();
 
     }
 
@@ -58,4 +58,37 @@ public class C_jvm_memory {
         d.x = d.x + 1;
         x = x + 1;
     }
+
+    public void exam3() {
+        Data d1 = new Data();
+        Data d2 = copy(d1);
+        d1.x = 10;
+
+        System.out.println("d1 : " + d1 + " : " + d1.x);
+        System.out.println("d2 : " + d2 + " : " + d2.x);
+    }
+
+    public Data copy(Data d) {
+        Data tmp = new Data();
+        tmp.x = d.x;
+        return tmp;
+    }
+
+    public void exam4() {
+        // * 재귀호출(Recursive call)
+        // 메서드의 내부에서 메서드 자신을 다시 호출하는 것을 '재귀호출'이라고 하고,
+        // 재귀호출을 하는 메서드를 '재귀 메서드'라고 한다.
+        int result = factorial(4);
+        System.out.println(result);
+    }
+
+    public int factorial(int n) {
+        // 기저조건
+        if ( n <= 1) {
+            return 1;
+        }
+
+        return n * factorial(n - 1);
+    }
+
 }

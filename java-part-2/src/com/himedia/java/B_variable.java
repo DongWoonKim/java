@@ -18,5 +18,19 @@ package com.himedia.java;
 // {}블럭을 벗어나면 소멸되어 사용할 수 없게 된다.
 
 public class B_variable {
+    public static void main(String[] args) {
+        System.out.println("Card.width : " + B_card.width);
+        System.out.println("Card.height : " + B_card.height);
 
+        B_card c1 = new B_card();
+        c1.kind = "spade";
+        c1.number = 4;
+        System.out.println(c1.kind + " : " + c1.number);
+
+        B_card c2 = new B_card();
+        c2.kind = "club";
+        c2.number = 3;
+        System.out.println(c2.kind + " : " + c2.number);
+
+    }
 }

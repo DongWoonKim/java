@@ -1,6 +1,6 @@
 package com.himedia.java;
 
-public class Start {
+public class N_Start {
 
     static final int COKE = 500, CIDER = 700, FANTA = 300, WATER = 200;
 

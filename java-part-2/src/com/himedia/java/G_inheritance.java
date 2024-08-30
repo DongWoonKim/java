@@ -39,6 +39,9 @@ package com.himedia.java;
 // 5. 다형성
 // 오버라이딩은 다형성의 기반이 된다. 부모 클래스 타입의 참조 변수가 자식 클래스의 객체를 참조할 때,
 // 오버라이딩된 메서드가 호출되어 자식 클래스 메서드가 실행된다.
+// 6. 단일 상속
+// 자바는 '다중 상속'을 허용하지 않고, 단일 상속만 허용한다.
+
 public class G_inheritance {
     public static void main(String[] args) {
         G_dog dog = new G_dog();

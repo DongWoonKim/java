@@ -14,10 +14,37 @@ public class B_generic_2<T extends Number> {
     }
 
     // 뺄셈
+    public T subtract(T num1, T num2) {
+        if ( num1 instanceof Integer ) {
+            return (T) Integer.valueOf(num1.intValue() - num2.intValue()) ;
+        } else if ( num1 instanceof Double) {
+            return (T) Double.valueOf(num1.doubleValue() - num2.doubleValue()) ;
+        }
+
+        throw new UnsupportedOperationException("지원되지 않는 타입입니다.");
+    }
 
     // 곱셈
+    public T multiply(T num1, T num2) {
+        if ( num1 instanceof Integer ) {
+            return (T) Integer.valueOf(num1.intValue() * num2.intValue()) ;
+        } else if ( num1 instanceof Double) {
+            return (T) Double.valueOf(num1.doubleValue() * num2.doubleValue()) ;
+        }
+
+        throw new UnsupportedOperationException("지원되지 않는 타입입니다.");
+    }
 
     // 나눗셈
+    public T divide(T num1, T num2) {
+        if ( num1 instanceof Integer ) {
+            return (T) Integer.valueOf(num1.intValue() / num2.intValue()) ;
+        } else if ( num1 instanceof Double) {
+            return (T) Double.valueOf(num1.doubleValue() / num2.doubleValue()) ;
+        }
+
+        throw new UnsupportedOperationException("지원되지 않는 타입입니다.");
+    }
 
     public static void main(String[] args) {
         B_generic_2<Integer> intCalculator = new B_generic_2<>();

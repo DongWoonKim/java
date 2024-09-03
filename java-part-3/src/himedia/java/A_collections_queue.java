@@ -222,6 +222,24 @@ public class A_collections_queue {
         }
     }
 
+    // 3. ArrayQueue
+    // - ArrayQueue는 큐와 덱(Deque, 양방향 큐)으로 사용할 수 있는 매우 효율적인 클래스이다.
+    // - 고정된 크기의 배열 기반으로 동작하지 않고, 필요에 따라 크기가 자동으로 조정된다.
+    public static void exam3() {
+        Queue<String> arrayQueue = new ArrayDeque<>();
+
+        arrayQueue.add("Apple");
+        arrayQueue.add("Banana");
+        arrayQueue.add("Orange");
+
+        System.out.println("Peek : " + arrayQueue.peek());
+
+        System.out.println("Poll : " + arrayQueue.poll());
+
+        // 나머지 동일..
+
+    }
+
     public static void main(String[] args) {
         exam2_5();
     }

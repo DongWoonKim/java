@@ -119,7 +119,6 @@ public class M_account {
     }
 
     public static void main(String[] args) {
-        getNowDateTime();
         printCreateAccountMenu();
 
         while (true) {

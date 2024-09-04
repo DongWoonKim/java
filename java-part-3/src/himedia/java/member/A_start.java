@@ -1,6 +1,6 @@
 package himedia.java.member;
 
-public class A_start2 {
+public class A_start {
     public static void main(String[] args) {
         A_member manager = new A_managementImpl();
         manager.printPricePlan();

@@ -1,4 +1,4 @@
-package himedia.java;
+package himedia.java.review;
 
 import java.util.HashMap;
 import java.util.Map;

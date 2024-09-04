@@ -1,4 +1,4 @@
-package himedia.java;
+package himedia.java.review;
 /*
 A_review.java(I) -> 인터페이스
 A_reviewImpl.java -> 구현체

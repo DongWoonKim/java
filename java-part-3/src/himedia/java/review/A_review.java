@@ -1,4 +1,4 @@
-package himedia.java;
+package himedia.java.review;
 
 public interface A_review {
     int printMenu();

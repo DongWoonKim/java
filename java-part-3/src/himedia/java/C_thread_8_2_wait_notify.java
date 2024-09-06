@@ -29,8 +29,90 @@ package himedia.java;
 
 // ** wait()과 notify() 메서드를 사용하려면 반드시 synchronized 블록(또는 메서드) 안에서 호출해야 한다.
 
+class Chat {
+    private boolean flag = false;
+    
+    // 질문하는 메서드
+    public synchronized void question(String msg) {
+        while (flag) {
+            try {
+                wait(); // 질문할 차례가 될 때까지 대기
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        System.out.println("Question : " + msg);
+        flag = true;
+        notify();
+    }
+    
+    // 답변하는 메서드
+    public synchronized void answer(String msg) {
+        while (!flag) {
+            try {
+                wait(); // 답변할 차례가 될 때까지 대기
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        System.out.println("Answer : " + msg);
+        flag = false;
+        notify();
+    }
+}
+
+class QuestionThread extends Thread {
+    private Chat chat;
+    private String[] questsions = { "Hi", "How are you?", "What are you doing?" };
+
+    public QuestionThread(Chat chat) {
+        this.chat = chat;
+    }
+
+    @Override
+    public void run() {
+        for ( String question : questsions ) {
+            chat.question(question);
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+}
+
+class AnswerThread extends Thread {
+    private Chat chat;
+    private String[] answers = { "Hello", "I'fine, thank you!", "I'm coding in Java" };
+
+    public AnswerThread(Chat chat) {
+        this.chat = chat;
+    }
+
+    @Override
+    public void run() {
+        for ( String answer : answers ) {
+            chat.answer(answer);
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+}
+
 public class C_thread_8_2_wait_notify {
     public static void main(String[] args) {
+        Chat chat = new Chat();
 
+        QuestionThread qt = new QuestionThread(chat);
+        AnswerThread at = new AnswerThread(chat);
+
+        qt.start();
+        at.start();
     }
 }

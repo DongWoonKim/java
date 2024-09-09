@@ -1,4 +1,5 @@
 import java.sql.*;
+import java.util.Scanner;
 
 public class A_jdbc {
 
@@ -134,6 +135,19 @@ public class A_jdbc {
 
     }
 
+    public void userInsert() {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("name ?");
+        String name = sc.nextLine();
+        System.out.println("age ?");
+        int age = sc.nextInt();
+        sc.nextLine();
+        System.out.println("phone ?");
+        String phone = sc.nextLine();
+
+        insertData(name, age, phone);
+    }
+
     public static void main(String[] args) {
         A_jdbc jdbc = new A_jdbc();
 //        jdbc.insertData("Alice", 11, "010-1234-5678");
@@ -142,6 +156,7 @@ public class A_jdbc {
 //        jdbc.updateData(4, "Sally", 13, "010-1111-2222");
 //        jdbc.selectOne(4);
 //        jdbc.deleteData(4);
-        jdbc.selectAll();
+//        jdbc.selectAll();
+        jdbc.userInsert();
     }
 }

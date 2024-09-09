@@ -1,6 +1,31 @@
 import java.sql.*;
 import java.util.Scanner;
+/*
+id pk autoincrement
+userId not null
+password not null
+name not null
+age int not null
+phone
+1. 회원가입,
+-> userId
+-> pw
+-> name
+-> age
+-> phone
+-> pw
+2. 로그인,
+-> userId
+-> pw
+Succ
+Welcome name!
+age : ~, phone : ~
+Fail
+Nothing!
+3 종료
 
+
+ */
 public class A_jdbc {
 
     public Connection connection()  {

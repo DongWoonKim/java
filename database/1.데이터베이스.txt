@@ -67,6 +67,59 @@ SELECT DEPTNO, ENAME, JOB FROM EMP;
 SELECT DISTINCT deptno FROM EMP;
 SELECT DISTINCT deptno, job FROM EMP;
 
+문제) EMP테이블에서 급여만 추출하시오.
+SELECT SAL FROM EMP;
+
+* 연산
+SELECT ENAME, SAL, SAL*12*COMM AS ANNSAL, COMM FROM EMP;
+
+* ORDER BY : 정렬
+흩어져 있는 데이터를 특정 기준에 따라 가지런히 순서를 맞추는 것은 자원을 많이 사용하기 때문에 꼭 필요한 경우가 아니라면 사용하지 말 것.
+SELECT * FROM EMP ORDER BY SAL(ASC); // 오름차순
+SELECT * FROM EMP ORDER BY SAL(DESC); // 내림차순
+
+* WHERE : 조건
+SELECT * FROM EMP WHERE DEPTNO = 30;
+문제) 사원번호가 7782인 사원정보만 나오도록.
+SELECT * FROM EMP WHERE EMPNO = 7782;
+문제) 부서번호가 30이면서 JOB이 SALESMAN인 경우
+SELECT * FROM emp WHERE DEPTNO = 30 AND JOB = 'SALESMAN';
+문제) 부서번호가 30이거나 JOB이 SALESMAN인 경우
+SELECT * FROM emp WHERE DEPTNO = 30 OR JOB = 'SALESMAN';
+문제) 부서번호가 20이면서 사원번호가 7782인 경우
+SELECT * FROM emp WHERE DEPTNO = 20 AND EMPNO = 7782;
+문제) 부서번호가 20이면서 연봉이 1000보다 높은 직원
+SELECT * FROM emp WHERE DEPTNO = 20 AND SAL > 1000;
+문제) 급여가 2500이상 직업이 ANALYST인 사원 정보만 출력
+SELECT * FROM emp WHERE SAL > 2500 AND JOB = 'ANALYST';
+문제) 연봉이 3000이 아닌 경우 정보 출력
+SELECT * FROM emp WHERE SAL != 3000;
+SELECT * FROM emp WHERE SAL <> 3000;
+SELECT * FROM emp WHERE NOT SAL = 3000;
+문제) 10번 부서의 모든 사원에게 급여의 13%를 보너스로 지불하기로 하였다. 이름, 급여, 보너스 금액, 부서번호를 출력하시오.
+SELECT ENAME, SAL, (SAL * 0.13) as BONUS, DEPTNO
+FROM emp;
+문제) 사원 번호 기준 각각 오름차순, 내림차순 하시오
+SELECT * FROM emp ORDER BY EMPNO;
+SELECT * FROM emp ORDER BY EMPNO DESC;
+문제) EMP테이블의 전체 열을 부서번호(오름차순)와 급여(내림 차순)으로 정렬하시오. 
+SELECT * FROM emp ORDER BY DEPTNO ASC, SAL DESC;
+
+* SELECT * FROM EMP WHERE JOB = 'MANAGER' OR JOB = 'SALESMAN' OR JOB = 'CLERK';
+-- 동일 표현
+SELECT * FROM EMP WHERE JOB IN ('MANAGER', 'SALESMAN', 'CLERK');
+-- 반대
+SELECT * FROM EMP WHERE JOB NOT IN ('MANAGER', 'SALESMAN', 'CLERK');
+
+* BETWEEN A AND B
+SELECT * FROM emp WHERE SAL >= 2000 AND SAL <= 3000;
+-> SELECT * FROM emp WHERE SAL BETWEEN 2000 AND 3000;
+- 부정
+SELECT * FROM emp WHERE SAL NOT BETWEEN 2000 AND 3000;
+
+* LIKE연산자와 와일드 카드
+LIKE : 이메일이나 게시판 제목 또는 내용 검색 기능처럼 일부 문자열이 포함된 데이터를 조회할 때 사용.
+
 
 
 

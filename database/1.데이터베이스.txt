@@ -211,8 +211,18 @@ WHERE DATE_ADD(HIREDATE, INTERVAL 384 MONTH) <= SYSDATE()
 * IFNULL() 함수 : 데이터가 NULL이 아니면 그 데이터를 그대로 출력하고 NULL이면 사용자가 입력한 데이터 출력
 SELECT EMPNO, ENAME SAL, IFNULL(COMM, 0) FROM emp;
 
+* SUM()함수
+SELECT SUM(SAL) FROM EMP;
+* COUNT()함수
+SELECT COUNT(*) FROM emp;
+* MAX(), MIN()함수
+SELECT MAX(SAL) FROM EMP;
+SELECT MIN(SAL) FROM EMP;
+* AVG()함수
+SELECT AVG(SAL) FROM EMP;
 
-
+문제) 입사일이 (hiredate)'80-12-17'이상인 데이터 조회
+SELECT * FROM EMP WHERE HIREDATE >= '80-12-17';
 
 
 

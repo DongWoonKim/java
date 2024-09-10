@@ -1,0 +1,89 @@
+* 결과 값을 원하는 열로 묶어서 출력하는 GROUP BY 절
+-> 각 부서별 평균 급여를 알고 싶다.
+SELECT AVG(SAL) FROM EMP WHERE DEPTNO = 10;
+SELECT AVG(SAL) FROM EMP WHERE DEPTNO = 20;
+SELECT AVG(SAL) FROM EMP WHERE DEPTNO = 20;
+... 귀찮다....
+SELECT AVG(SAL) FROM EMP WHERE DEPTNO = 10
+UNION ALL
+SELECT AVG(SAL) FROM EMP WHERE DEPTNO = 20
+UNION ALL
+SELECT AVG(SAL) FROM EMP WHERE DEPTNO = 20;
+...여전히 귀찮다...
+
+** GROUP BY 절 모양
+SELECT [조회할 열1이름], [열2이름], ..., [열N이름]
+FROM [테이블 이름]
+WHERE [조건식]
+GROUP BY [그룹화할 열을 지정(여러개 지정 가능)] 
+ORDER BY [정렬하려는 열 지정];
+ - GROUP BY 는 열위치에 * 을 쓸 수 없다.
+ - 다중행 함수를 사용하지 않은 일반열은 GROUP BY 절에 명시하지 않으면 SELECT절에 사용할 수 없다.
+
+-> 사용
+SELECT AVG(SAL), DEPTNO
+FROM emp
+GROUP BY DEPTNO;
+
+-> 사용2
+SELECT AVG(SAL), DEPNO, JOB
+FROM EMP
+GROUP BY DEPTNO, JOB
+ORDER BY DEPTNO, JOB;
+
+** GROUP BY절에 조건을 줄 때 사용하는 HAVING절
+** HAVING절은 SELECT문에 GROUP BY 절이 존재할 때만 사용할 수 있다. 그리고 GROUP BY 절을 통해 그룹화된 결과 값의 범위를 제한하는데 사용한다.
+** HAVING절 모양
+SELECT [조회할 열1이름], [열2이름], ..., [열N이름]
+FROM [테이블 이름]
+WHERE [조건식]
+GROUP BY [그룹화할 열을 지정(여러개 지정 가능)] 
+HAVING [출력된 그룹화할 결과 제한]
+ORDER BY [정렬하려는 열 지정];
+
+각 부서의 직책별 평균 급여를 구하되, 그 평균 급여가 2000 이상인 그룹만 출력하시오.
+SELECT AVG(SAL), DEPTNO, JOB
+FROM EMP
+GROUP BY DEPTNO, JOB
+HAVING AVG(SAL) >= 2000
+ORDER BY DEPTNO, JOB; 
+
+=> 그룹화 하기전 WHERE절을 실행한 후
+=> 나온 결과화 데이터가 GROUP BY 절과 HAVING절의
+=> 그룹화 대상이 된다.
+=> GROUP BY 절로 그룹화가 진행되고,
+=> HAVING절에서 그룹을 제한하므로
+=> 그룹이 만들어지기 전 걸러진 데이터들은 그룹화가 진행되지 않는다.
+
+문제1) 10번 부서에 대해 급여의 평균 값, 최대/최소 값 인원수를 구하시오. 
+문제2) 각 부서별 같은 직무를 갖는 사원의 인원수를 구하여 부서번호, 직무, 인원수를 출력
+문제3) 사원들의 직무별 평균 급여와 최고급여, 최저급여를 평균급여에 대해 오름차순으로 정렬하시오.
+문제4) 각 직무별 사원수와 최고 급여액, 최저 급여액, 평균급여액을 구하되, 사원수가 많은 직무부터 차례대로 출력하시오
+(평균 급여는 소수점 이하 둘째 자리에서 반올림할 것)
+**ROUND(값, 수) 형식으로 사용한다.
+**예시 ROUND('값', 1)
+문제5) 부서별 월급합계가 5000을 초과하는 -> GROUP BY ~ HAVING
+ 각 업무에 대해서 업무와 월 급여 합계를 조회.
+문제6) 급여가 1000이상인 사원들의 부서별 평균 급여를 출력하시오.
+단, 부서별 평균 급여가 2000이상인 부서만 출력할 것.
+문제7) 각 부서별 같은 업무(JOB)를 하는 사람의 인원수를 구해서
+부서번호, 업무(job), 인원수를 
+부서번호에 대해서 오름차순으로 정렬하여 출력하시오.
+문제8) EMP테이블에서 부서 인원이 4명보다 많은 부서의 
+부서번호, 인원수, 급여의 합을 출력하시오.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

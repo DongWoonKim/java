@@ -55,22 +55,37 @@ ORDER BY DEPTNO, JOB;
 => HAVING절에서 그룹을 제한하므로
 => 그룹이 만들어지기 전 걸러진 데이터들은 그룹화가 진행되지 않는다.
 
-문제1) 10번 부서에 대해 급여의 평균 값, 최대/최소 값 인원수를 구하시오. 
+문제1) 10번 부서에 대해 급여의 평균 값, 최대/최소 값 인원수를 구하시오.
+SELECT AVG(SAL), MAX(SAL), MIN(SAL), COUNT(*) FROM EMP WHERE DEPTNO = 10;
+ 
 문제2) 각 부서별 같은 직무를 갖는 사원의 인원수를 구하여 부서번호, 직무, 인원수를 출력
+SELECT DEPTNO, JOB, COUNT(*) FROM EMP GROUP BY DEPTNO, JOB;
+
 문제3) 사원들의 직무별 평균 급여와 최고급여, 최저급여를 평균급여에 대해 오름차순으로 정렬하시오.
+SELECT AVG(SAL), MAX(SAL), MIN(SAL) FROM EMP GROUP BY JOB ORDER BY AVG(SAL);
+
 문제4) 각 직무별 사원수와 최고 급여액, 최저 급여액, 평균급여액을 구하되, 사원수가 많은 직무부터 차례대로 출력하시오
 (평균 급여는 소수점 이하 둘째 자리에서 반올림할 것)
 **ROUND(값, 수) 형식으로 사용한다.
 **예시 ROUND('값', 1)
+SELECT COUNT(*), MAX(SAL), MIN(SAL), AVG(SAL), ROUND(AVG(SAL), 1) FROM EMP GROUP BY JOB ORDER BY COUNT(*) DESC;
+
 문제5) 부서별 월급합계가 5000을 초과하는 -> GROUP BY ~ HAVING
  각 업무에 대해서 업무와 월 급여 합계를 조회.
+SELECT JOB, SUM(SAL) FROM EMP GROUP BY DEPTNO, JOB HAVING SUM(SAL) > 5000;
+
 문제6) 급여가 1000이상인 사원들의 부서별 평균 급여를 출력하시오.
 단, 부서별 평균 급여가 2000이상인 부서만 출력할 것.
+SELECT DEPTNO, AVG(SAL) FROM EMP WHERE SAL > 1000 GROUP BY DEPTNO HAVING AVG(SAL) >= 2000;
+
 문제7) 각 부서별 같은 업무(JOB)를 하는 사람의 인원수를 구해서
 부서번호, 업무(job), 인원수를 
 부서번호에 대해서 오름차순으로 정렬하여 출력하시오.
+SELECT DEPTNO, JOB, COUNT(*) FROM EMP GROUP BY DEPTNO, JOB ORDER BY DEPTNO;
+
 문제8) EMP테이블에서 부서 인원이 4명보다 많은 부서의 
 부서번호, 인원수, 급여의 합을 출력하시오.
+SELECT DEPTNO, COUNT(*), SUM(SAL) FROM EMP GROUP BY DEPTNO HAVING COUNT(*) > 4;
 
 
 

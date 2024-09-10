@@ -1,0 +1,86 @@
+* 데이터베이스 개념
+데이터베이스 : 구조화된 데이터의 집합
+- 여러 사람과 실시간으로 공유하여 사용
+- 효율적인 데이터 관리
+- 효율적인 데이터 검색
+- 일관성 있는 방법으로 데이터 관리
+- 데이터 누락 및 중복제거
+
+* 파일 시스템을 통한 데이터 관리
+서로 다른 여러 응용 프로그램이 제공하는 기능에 맞게 필요한
+데이터를 각각 저장하고 관리한다. 각 파일에 저장한 데이터는 
+서로 연관이 없고 중복 또는 누락이 발생할 수 있다.
+
+* DBMS(Database Management System)를 통한 데이터베이스 관리 조건을 만족하며 서비스 제공의 효율성을 높이기 위해 데이터베이스 관리 시스템이 등장. 
+여러 목적으로 사용할 데이터 접근, 관리 등의 업무를 DBMS가 전담하는 방식....DBMS는 자신이 관리하는 데이터베이스 관련 작업을 수행하고 결과 값을 제공한다.
+여러 응용 프로그램이 하나의 통합된 데이터를 같은 방식으로 사용, 관리할 수 있으므로 데이터 누락이나 중복을 방지할 수 있다.
+
+* 데이터 모델
+컴퓨터에 데이터를 저장하는 방식을 정의해 놓은 개념이다.
+대표 데이터 모델로 계층형, 네트워크형, **관계형, 객체 지향형 등이 있다.
+
+관계형데이터베이스 => RDBMS
+
+SQL(Structure Query Language) => RDBMS에서 데이터를 다루고 관리하는데 사용하는 데이터베이스 질의 언어이다.
+
+* 종류
+DQL(Data Query Language)
+ - RDBMS에 저장한 데이터를 원하는 방식으로 조회하는 명령어
+DML(Data Manipulation Language)
+ - RDBMS 내 테이블의 데이터를 저장, 수정, 삭제 하는 명령어
+DDL(Data Definition Language)
+ - RDBMS 내 데이터 관리를 위해 테이블을 포함한 여러 객체를 생성, 수정, 삭제하는 명령어
+TCL(Transaction Control Language)
+ - 트랜잭션 데이터의 영구 저장, 취소 등과 관련된 명령어
+DCL(Data Control Language)
+ - 데이터 사용 권한과 관련된 명령어
+
+* 테이블 : 표 형태의 데이터 저장 공간
+(행 : row, 열 : column)
+키(key) : 수많은 데이터를 구별할 수 있는 유일한 값. 하나의 테이블을 구성하는 여러 열 중에서 특별한 의미를 지닌 하나 또는 여러 열의 조합을 의미한다.
+(기본키 : Primary key, 후보키 : Candibate key, 외래키 : Foreign key, 복합키 : Composite key)
+
+** EMP : 사원정보
+EMPNO : 사원번호
+ENAME : 사원이름
+JOB : 직책
+MGR : 직속 상관의 사원번호
+HIREDATE : 입사일
+SAL : 급여
+COMM : 인센티브
+DETPNO : 부서번호
+
+** DEPT : 부서정보
+DEPTNO : 부서번호
+DNAME : 부서이름
+LOC : 부서위치
+
+** SALGRAD : 연봉정보
+GRADE : 급여등급
+LOSAL : 급여 등급의 최소 급여액
+HISAL : 급여 등급의 최대 급여액
+
+- EMP테이블 조회
+SELECT * FROM EMP;
+SELECT DEPTNO, ENAME, JOB FROM EMP;
+* DISTINCT : 중복제거
+SELECT DISTINCT deptno FROM EMP;
+SELECT DISTINCT deptno, job FROM EMP;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

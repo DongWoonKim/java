@@ -118,11 +118,98 @@ SELECT * FROM emp WHERE SAL >= 2000 AND SAL <= 3000;
 SELECT * FROM emp WHERE SAL NOT BETWEEN 2000 AND 3000;
 
 * LIKE연산자와 와일드 카드
-LIKE : 이메일이나 게시판 제목 또는 내용 검색 기능처럼 일부 문자열이 포함된 데이터를 조회할 때 사용.
+- LIKE : 이메일이나 게시판 제목 또는 내용 검색 기능처럼 일부 문자열이 포함된 데이터를 조회할 때 사용.
+- 와일드 카드 
+ % : 길이와 상관없이 모든 문자 데이터를 의미
+-> 이름이 s로 끝나는 데이터 조회
+SELECT * FROM EMP WHERE ENAME LIKE '%s';
+-> 이름이 s로 시작하는 데이터 조회
+SELECT * FROM EMP WHERE ENAME LIKE 's%';
+-> 와일드 카드 사이의 문자(열)이 포함된 모든 데이터 추출
+SELECT * FROM EMP WHERE ENAME LIKE '%AM%';
+- 부정
+SELECT * FROM EMP WHERE ENAME NOT LIKE '%AM%';
+
+* IS NULL
+SELECT * FROM EMP WHERE COMM IS NULL;
+- 부정
+SELECT * FROM EMP WHERE COMM IS NOT NULL;
+
+* 집합 연산 : 두 개 이상의  SELECT문의 결과 값을 연결할 때 사용
+주의점 : 열 개수와 각 열의 자료형이 순서별로 일치해야 한다.
+SELECT EMPNO, ENAME, SAL, DEPTNO FROM EMP WHERE DEPTNO = 10
+UNION
+SELECT EMPNO, ENAME, SAL, DEPTNO FROM EMP WHERE DEPTNO = 20;
+
+* UNION 종류
+- UNION : 연결된 SELECT문의 결과 값을 합집합으로 묶어준다.
+결과 값의 중복은 제거 된다.
+SELECT EMPNO, ENAME, SAL, DEPTNO FROM EMP WHERE DEPTNO = 10
+UNION 
+SELECT EMPNO, ENAME, SAL, DEPTNO FROM EMP WHERE DEPTNO = 10;
+- UNION ALL : 연결된 SELECT문의 결과 값을 합집합으로 묶어준다. 
+중복된 결과 값도 제거 없이 모두 출력한다.
+SELECT EMPNO, ENAME, SAL, DEPTNO FROM EMP WHERE DEPTNO = 10
+UNION ALL 
+SELECT EMPNO, ENAME, SAL, DEPTNO FROM EMP WHERE DEPTNO = 10;
+
+* 대/소문자를 바꿔주는 UPPER, LOWER함수
+SELECT ENAME, UPPER(ENAME), LOWER(ENAME) FROM emp;
+
+* 문자열 길이를 구하는 LENGTH함수
+SELECT ENAME, LENGTH(ENAME) FROM emp;
+
+* 문자열 일부를 추출하는 SUBSTR함수
+-- SUBSTR(문자열 데이터, 시작위치, 추출길이)
+-- SUBSTR(문자열 데이터, 시작위치)
+SELECT JOB, SUBSTR(JOB, 1, 2), SUBSTR(JOB, 5) FROM emp;
+
+* 특정 문자를 다른 문자로 바꾸는 REPLACE함수
+- REPLACE([문자열 데이터 또는 열 이름(필수)], [찾는 문자열(필수)], [대체할 문자열(선택)])
+SELECT '010-1234-5678' AS REPLACE_BEFORE,
+       REPLACE('010-1234-5678', '-', ' ') AS REPLACE_1,
+       REPLACE('010-1234-5678', '-', '') AS REPLACE_2;
 
 
+문제1) JOB이 CLERK인 데이터 조회
+SELECT * FROM emp WHERE JOB = 'CLERK';
+문제2) SAL이 1000이상인 데이터 조회
+SELECT * FROM emp WHERE SAL >= 1000;
+문제3) COMM이 NULL인 데이터만 조회
+SELECT * FROM EMP WHERE COMM IS NULL;
+문제4) COMM이 NULL이 아닌 데이터만 조회
+SELECT * FROM EMP WHERE COMM IS NOT NULL;
+문제5) 사원이름(ENAME)에서 'R'로 끝나는 데이터 조회
+SELECT * FROM emp WHERE ENAME LIKE '%R';
+문제6) 이름이 m으로 시작, 부서 번호가 10인 사람 조회
+SELECT * FROM emp WHERE ENAME LIKE 'M%' AND DEPTNO = 10;
+문제7) 연봉이 1000~2000인 데이터 BETWEEN 사용할 것
+SELECT * FROM emp WHERE SAL BETWEEN 1000 AND 2000;
+문제8) 연봉이 1000~2000인 데이터 부등호 사용할 것
+SELECT * FROM emp WHERE SAL >= 1000 AND SAL <= 2000;
+문제9) 연봉이 1000, 2000인 데이터 IN 사용할 것
+SELECT * FROM emp WHERE SAL IN (1000, 2000);
+문제10) 부서번호 중복제거
+SELECT DISTINCT DEPTNO FROM emp;
+문제11) 연봉순 정렬 각각 내림차순, 오름차순 
+SELECT * FROM emp ORDER BY SAL DESC;
+SELECT * FROM emp ORDER BY SAL;
 
+* 날짜 데이터를 다루는 날짜 함수
+SELECT SYSDATE() AS NOW,
+       DATE_SUB(SYSDATE(), INTERVAL 1 DAY) AS YESTERDAY,
+       DATE_ADD(SYSDATE(), INTERVAL 1 DAY) AS TOMORROW;
 
+* 몇 개월 이후 날자를 구하는 DATE_ADD
+SELECT EMPNO, ENAME, HIREDATE, DATE_ADD(HIREDATE, INTERVAL 120 MONTH ) AS WORK10YEAR FROM emp;
+
+문제) 32년 (384개월)이 되지 않은 사원 이름 출력
+SELECT ENAME FROM emp
+WHERE DATE_ADD(HIREDATE, INTERVAL 384 MONTH) <= SYSDATE()
+;
+
+* IFNULL() 함수 : 데이터가 NULL이 아니면 그 데이터를 그대로 출력하고 NULL이면 사용자가 입력한 데이터 출력
+SELECT EMPNO, ENAME SAL, IFNULL(COMM, 0) FROM emp;
 
 
 

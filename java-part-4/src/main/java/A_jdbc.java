@@ -1,6 +1,12 @@
 import java.sql.*;
 import java.util.Scanner;
 /*
+CREATE DATABASE java_basic
+CHARACTER SET utf8mb4
+COLLATE utf8mb4_unicode_ci;
+ */
+
+/*
 id pk autoincrement
 userId not null
 password not null

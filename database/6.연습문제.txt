@@ -1,15 +1,96 @@
 ﻿1) 부서번호, 부서명, 이름, 급여를 출력하시오
+SELECT
+	E.EMPNO, D.DNAME, E.ENAME, E.SAL
+FROM
+	EMP E, DEPT D
+WHERE
+	E.DEPTNO = D.DEPTNO;
 2) 이름이 'ALLEN'인 사원의 부서명을 출력하시오
+SELECT
+	D.DNAME
+FROM
+	EMP E, DEPT D
+WHERE
+	E.DEPTNO = D.DEPTNO
+AND
+	E.ENAME = 'ALLEN';
 3) 'ALLEN'의 직무와 같은 사람의 이름, 부서명, 급여, 직무를 출력하시오.
-4) 'JONES'가 속해 있는 부서의 모든 사람의 사원번호, 이름, 입사일, 급여를 출력하시오.
-5)전체 사원의 평균임금보다 많은 사원의 사원번호, 이름, 부서명, 입사일, 지역, 급여를 출력하시오.
-6.10번 부서의 사람들 중에서 20번 부서의 사원과 같은 업무를 하는 사원의 사원번호, 이름, 부서명, 입사일, 지역을 출력하시오.
-7. 10번 부서와 같은 일을 하는 사람의 사원번호, 이름, 부서명, 지역, 급여를 급여가 많은 순으로 출력하시오
-8.'MARTIN'이나 'SCOTT'의 급여와 같은 사원의 사원번호, 이름, 급여를 출력하시오.
-9.급여가 30번 부서의 최고 급여보다 높은 사원 사원번호, 이름, 급여를 출력하시오.
-10.사원명이 SMITH인 사람과 
-같은 부서의 사원명을 출력하시오.
+SELECT	
+	E.ENAME, D.DNAME, E.SAL, E.JOB
+FROM 
+	EMP E, DEPT D
+WHERE
+	E.DEPTNO = D.DEPTNO
+AND
+	JOB = (select job from emp where ename = 'ALLEN');
 
+4) 'JONES'가 속해 있는 부서의 모든 사람의 사원번호, 이름, 입사일, 급여를 출력하시오.
+SELECT
+	EMPNO, ENAME, HIREDATE, SAL
+FROM
+	EMP E
+WHERE 
+	DEPTNO = (select deptno from emp where ename = 'JONES');
+
+5)전체 사원의 평균임금보다 많은 사원의 사원번호, 이름, 부서명, 입사일, 지역, 급여를 출력하시오.
+SELECT
+	E.EMPNO, E.ENAME, D.DNAME, E.HIREDATE, D.LOC, E.SAL
+FROM 
+	EMP E, DEPT D
+WHERE
+	E.DEPTNO = D.DEPTNO
+AND
+	SAL > (select avg(sal) from emp);
+
+6.10번 부서의 사람들 중에서 20번 부서의 사원과 같은 업무를 하는 사원의 사원번호, 이름, 부서명, 입사일, 지역을 출력하시오.
+SELECT
+	E.EMPNO, E.ENAME, D.DNAME, E.HIREDATE, D.LOC
+FROM
+	(select *  from emp where deptno = 10) E, DEPT D
+WHERE
+	E.DEPTNO = D.DEPTNO
+AND
+	 E.JOB in (select job from emp where deptno = 20);
+
+7. 10번 부서와 같은 일을 하는 사람의 사원번호, 이름, 부서명, 지역, 급여를 급여가 많은 순으로 출력하시오
+SELECT
+	E.EMPNO, E.ENAME, D.DNAME, D.LOC, E.SAL
+FROM
+	EMP E, DEPT D
+WHERE 
+	E.DEPTNO = D.DEPTNO
+AND 
+	E.DEPTNO != 10
+AND 
+	E.JOB IN (select job from emp where deptno = 10)
+ORDER BY E.SAL DESC;
+
+8.'MARTIN'이나 'SCOTT'의 급여와 같은 사원의 사원번호, 이름, 급여를 출력하시오.
+SELECT
+	EMPNO, ENAME, SAL
+FROM 
+	EMP
+WHERE
+	SAL IN (select sal from emp where ename in ('MARTIN', 'SCOTT'));
+
+9.급여가 30번 부서의 최고 급여보다 높은 사원 사원번호, 이름, 급여를 출력하시오.
+SELECT
+	EMPNO, ENAME, SAL 
+FROM
+	EMP
+WHERE
+	SAL > (select max(sal) from emp where deptno = 30);
+
+10.사원명이 MARTIN인 사람과 
+같은 부서의 사원명을 출력하시오.
+SELECT
+    ENAME
+FROM
+    EMP
+WHERE
+    DEPTNO = (select deptno from emp where ename = 'MARTIN')
+AND
+    ENAME NOT IN ('MARTIN');
 
 
 

@@ -1,0 +1,155 @@
+ * 데이터를 추가, 수정, 삭제하는 데이터 조작어 DML
+ - INSERT문
+INSERT INTO 테이블명 (열1, 열2, ..., 열N)
+VALUES (열1데이터, 열2데이터, ..., 열N데이터);
+
+CREATE TABLE DEPT_TEMP
+AS SELECT * FROM DEPT;
+
+- 열지정 삽입
+INSERT INTO DEPT_TEMP(DEPTNO, DNAME, LOC)
+VALUES(50, 'DATABASE', 'SEOUL');
+
+- 열지정 생략 : 해당 모든 열에 데이터를 넣을 때에만 생략가능
+INSERT INTO DEPT_TEMP VALUES(60, 'NETWORK', 'BUSAN');
+
+- NULL지정
+INSERT INTO DEPT_TEMP(DEPTNO, DNAME, LOC)
+VALUES(70, 'WEB', NULL);
+
+- NULL 암시적 삽입
+INSERT INTO DEPT_TEMP(DEPTNO, LOC)
+VALUES(80,  'INCHEON');
+
+CREATE TABLE EMP_TEMP_1
+AS SELECT * FROM EMP WHERE 1<>1;
+* WHERE절의 조건이 1<>1이기 때문에 각 행을 조건식에 대입한 결과 값은 항상 FALSE가 되어 결과적으로 행(데이터)은 만들어지지 않는다.
+
+- 서브쿼리를 이용하여 한 번에 여러 데이터 추가하기
+유의점
+1) VALUES절은 사용하지 않는다.
+2) 데이터가 추가되는 테이블의 열 갯수와 서브쿼리의 열 갯수가 일치해야 한다.
+3) 데이터가 추가되는 테이블의 자료형과 서브쿼리의 자료형이 일치해야 한다.
+
+INSERT INTO EMP_TEMP_1(EMPNO, ENAME, JOB, MGR, HIREDATE, SAL, COMM, DEPTNO)
+SELECT
+    E.EMPNO, E.ENAME, E.JOB, E.MGR, E.HIREDATE, E.SAL, E.COMM, E.DEPTNO
+FROM
+    EMP E, SALGRADE S
+WHERE
+    E.SAL BETWEEN S.LOSAL AND S.HISAL
+  AND
+    S.GRADE = 1;
+
+문제) 이름에 'A'가 들어가 있는 EMP테이블의 데이터를 EMP_TEMP테이블로 삽입할 것!
+INSERT INTO EMP_TEMP_1(EMPNO, ENAME, JOB, MGR, HIREDATE, SAL, COMM, DEPTNO)
+SELECT
+	EMPNO, ENAME, JOB, MGR, HIREDATE, SAL, COMM, DEPTNO
+FROM
+	EMP
+WHERE
+	ENAME LIKE '%A%';
+
+ - UPDATE문
+UPDATE [변경할 테이블명]
+SET [변경할 열1] = [데이터], [변경할 열2] = [데이터],...,[변경할 열N] = [데이터]
+WHERE [데이터를 변경할 대상 행을 선별하기 위한 조건]
+
+CREATE TABLE DEPT_TEMP_2
+AS SELECT * FROM DEPT;
+
+UPDATE 
+	DEPT_TEMP_2
+SET 
+	LOC = 'SEOUL', 
+	DNAME = 'DATABASE'
+WHERE
+	DEPTNO = 40;
+
+ - 서브쿼리를 사용하여 데이터 수정
+UPDATE
+	DEPT_TEMP_2
+SET
+	LOC = 'BUSAN'
+WHERE
+	DEPTNO IN (
+	select deptno from dept where loc = 'DALLAS'
+);
+
+ - DELETE문
+DELETE FROM [테이블명]
+[WHERE 삭제할 대상을 선별할 조건식];
+
+DELETE FROM EMP_TEMP_1
+WHERE JOB = 'MANAGER';
+
+ - 서브쿼리를 사용하여 데이터 삭제
+DELETE FROM EMP_TEMP_1
+WHERE
+	EMPNO IN (
+	select e.empno from emp e, salgrade s where e.sal between s.losal and s.hisal and grade = 3 and e.deptno = 30
+);
+
+* 트랜잭션과 세션
+ 트랜잭션이란 더 이상 분할할 수 없는 최소 수행 단위를 뜻하며 계좌 이체와 같이 하나의 작업 또는 밀접하게 연관된 작업을 수행하기 위해 한 개 이상의 데이터 조작 명령어로 이루어진다. 즉 어떤기능 한 가지를 수행하는 'sql문 덩어리'라고 볼 수 있다.
+
+트랜잭션은 하나의 트랜잭션 내에 있는 여러 명령어를 한 번에 수행하여 작업을 완료하거나 아예 모두 수행하지 않은 상태, 즉 모든 작업을 취소한다. 이러한 특성으로 트랜잭션 의미를 'All or Nothing'문장으로 표현하기도 한다.
+그리고 트랜잭션 제어하기 위해 사용하는 명령어를 TCL(Transaction Control Language)라고 한다.
+
+키워드 : commit, rollback
+
+ 세션이란 일반적으로 어떤 활동을 위한 시간이나 기간을 뜻한다. 오라클 데이터베이스에서 접속을 시작으로 여러 데이터베이스에서 관련 작업을 수행한 후 접속을 종료하기까지 전체 기간을 의미한다. 좀 더 익숙한 단어로 표현하면 게임이나 웹 서비스에 로그인해서 로그아웃할 때까지의 기간 또는 모바일 온라인 게임 등을 켜고 끌 때까지의 기간 정도로 생각해도 된다.
+그러므로 세션이 여러 개라는 말은 현재 데이터베이스에 접속하여 사용중인 연결이 여러개 있다는 뜻이다.
+
+ - 읽기와 일관성의 중요성
+데이터베이스는 여러 곳에서 동시에 접근하여 데이터를 관리/사용하는 것이 목적이므로 대부분 수많은 세션이 동시에 연결되어 있다. 읽기 일관성이란 어떤 특정 세션에서 테이블의 데이터를 변경 중일 때 그 외의 다른 세션에서는 데이터의 변경이 확정되기 전까지 변경 사항을 알 필요가 없으므로, 데이터를 변경 중인 세션을 제외한 나머지 세션에서는 현재 진행 중인 변경과 무관한 본래의 데이터를 보여주는 특성을 의미한다.
+
+ - 수정 중인 데이터 접근을 막는 lock
+LOCK이란 특정 세션에서 조장 중인 데이터는 트랜잭션인 완료되기 전까지 다른 세션에서 조작할 수 없는 상태가 된다.
+즉 데이터가 잠기는(lock)것이다. 조작 중인 데이터를 다른 세션은 조작할 수 없도록 접근을 보류시키는 것을 뜻한다.
+
+-> DDL
+ * CREATE 테이블
+CREATE TABLE 소유계정.테이블이름 (
+	열1 이름 열1 자료형,
+	열2 이름 열2 자료형,
+	...
+	열N 이름 열N 자료형,
+);
+
+- 테이블 이름 생성 규칙
+1. 테이블 이름은 문자로 시작해야 한다.
+(한글도 가능하며, 숫자로는 시작할 수 없음)
+2. 테이블 이름은 30BYTE이하여야 한다.
+(즉 영어는 30자, 한글은 15자까지 사용가능)
+3. 같은 사용자 소유의 테이블 이름은 중복될 수 없다.
+4. 테이블 이름은 영문자(한글 가능), 숫자(0~9)와 특수문자 $, #, _를 사용할 수 있다.
+5. SQL키워드는 테이블 이름으로 사용할 수 없다.
+
+- 열이름 생성 규칙
+1. 열 이름은 문자로 문자로 시작해야 한다.
+2. 열 이름은 30BYTE이하여야 한다.
+3. 한 테이블의 열 이름은 중복될 수 없다.
+4. 열 이름은 영문자(한글 가능), 숫자(0~9)와 특수문자 $, #, _를 사용할 수 있다.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

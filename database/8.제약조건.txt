@@ -1,0 +1,59 @@
+ * 제약조건(Constraint)
+테이블에 저장할 데이터를 제약하는 특수한 규칙을 뜻한다. 데이베이스에서 사용하는 제약조건은 테이블의 특정 열에 지정한다. 제약조건을 지정한 열에 제약 조건에 부합하지 않는 데이터를 저장할 수 없다.
+
+- NOT NULL : 지정한 열에 NULL을 허용하지 않는다. NULL을 제외한 데이터의 중복은 허용된다.
+- UNIQUE : 지정한 열이 유일한 값을 가져야 한다. 즉 중복될 수 없다. 단 NULL은 값의 중복에서 제외. 
+- PRIMARY KEY : 지정한 열이 유일한 값이면서 NULL을 허용하지 않는다. 테이블에 하나만 지정 가능
+- FOREIGN KEY : 다른 테이블의 열을 참조하여 존재하는 값만 입력 가능
+-  CHECK : 설정한 조건식을 만족하는 데이터만 입력 가능
+
+ * 데이터 무결성?
+데이터베이스에 저장되는 데이터의 정확성과 일관성을 보장한다는 의미이며, 이를 위해 항상 유지해야 하는 기본 규칙을 가진다. 제약조건은 이러한 데이터 무결성을 지키기 위한 장치로서 중요한 역할을 한다.
+그리고 테이블의 데이터 삽입(INSERT), 수정(UPDATE), 삭제(DELETE) 등 모든 과정에서 지켜야 한다.
+
+ - 무결성의 종류
+1. 영역 무결성 : 열에 저장되는 값의 적정 여부를 확인.
+자료형, 적절한 형식의 데이터, NULL여부같은 정해 놓은 범위를 만족하는 데이터임을 규정
+
+2. 객체 무결성 : 테이블 데이터를 유일하게 식별할 수 있는 기본키는 반드시 값을 가지고 있어야 하며 NULL이 될 수 없고 중복될 수 없다.
+
+3. 참조 무결성 : 참조 테이블의 외래키 값은 참조 테이블의 기본키로서 존재해야 하며, NULL이 가능
+
+이러한 무결성을 보장하기 위해 데이터베이스에서는 다섯 가지 제약 조건을 제공한다. 제약조건은 데이터베이스 설계시점, 즉 테이블을 생성할 때 주로 지정한다.
+
+ * NOT NULL : 빈 값을 허락하지 않는다.
+CREATE TABLE table_notnull (
+	LOGIN_ID VARCHAR(20) NOT NULL,
+	LOGIN_PW VARCHAR(20) NOT NULL
+);
+
+문제) ID : 1004 / PW : 1234 INSERT하시오.
+INSERT INTO table_notnull VALUES ('1004', '1234');
+문제) TEL VARCHAR(2)컬럼을 table_notnull에 추가하시오.
+ALTER TABLE table_notnull ADD TEL VARCHAR(2);
+문제) TEL VARCHAR(2) 컬럼명을 PHONE 타입을 VARCHAR(20)으로 변경해주세요.
+ALTER TABLE table_notnull CHANGE tel phone varchar(20);ALTER TABLE table_notnull MODIFY PHONE VARCHAR(20);
+
+ * UNIQUE : 중복된 값을 허용하지 않음
+CREATE TABLE table_unique (
+	LOGIN_ID VARCHAR(20) UNIQUE,
+	LOGIN_PW VARCHAR(20) NOT NULL,
+	PHONE VARCHAR(20)	
+);
+
+-> INSERT INTO table_unique VALUES( NULL, '1234', '4321');
+
+-> INSERT INTO table_unique VALUES( '1004', '1111', '1111');
+
+INSERT INTO table_unique VALUES( '1004', '222', '2222');
+// 에러발생 : Duplicate entry '1004' for key 'table_unique. LOGIN_ID'
+
+
+
+
+
+
+
+
+
+

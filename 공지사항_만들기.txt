@@ -22,3 +22,5 @@ Content 테이블 -> 공지사항 내용
 7. 로그아웃
 8. 회원 탈퇴
 9. 프로그램 종료
+ System.setOut(new PrintStream(System.out, true, "UTF-8"));
+      

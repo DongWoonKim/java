@@ -1,5 +1,6 @@
 package com.example.tobi.springtobi;
 
+import com.example.tobi.springtobi.ex_1_3.dao.DConnectionMaker;
 import com.example.tobi.springtobi.ex_1_3.dao.UserDao;
 import com.example.tobi.springtobi.ex_1_3.domain.User;
 
@@ -12,7 +13,7 @@ public class SpringTobiApplication {
     public static void main(String[] args) throws SQLException, ClassNotFoundException {
         setCharacter();
 
-        UserDao dao = new UserDao();
+        UserDao dao = new UserDao(new DConnectionMaker());
 
         User user = new User();
         user.setId("tobi3");

@@ -1,4 +1,4 @@
-package com.example.tobi.springtobi.domain;
+package com.example.tobi.springtobi.ex_1_1.domain;
 
 public class User {
 

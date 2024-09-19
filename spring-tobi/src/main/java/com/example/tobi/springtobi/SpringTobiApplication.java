@@ -1,7 +1,7 @@
 package com.example.tobi.springtobi;
 
-import com.example.tobi.springtobi.dao.UserDao;
-import com.example.tobi.springtobi.domain.User;
+import com.example.tobi.springtobi.ex_1_3.dao.UserDao;
+import com.example.tobi.springtobi.ex_1_3.domain.User;
 
 import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
@@ -15,7 +15,7 @@ public class SpringTobiApplication {
         UserDao dao = new UserDao();
 
         User user = new User();
-        user.setId("tobi");
+        user.setId("tobi3");
         user.setName("Tobi");
         user.setPassword("1234");
 

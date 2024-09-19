@@ -1,19 +1,25 @@
-package com.example.tobi.springtobi.dao;
+package com.example.tobi.springtobi.ex_1_1.dao;
 
-import com.example.tobi.springtobi.domain.User;
+import com.example.tobi.springtobi.ex_1_1.domain.User;
 
 import java.sql.*;
 
-public class UserDao {
+public abstract class UserDao {
+
+//    private Connection getConnection() throws SQLException, ClassNotFoundException {
+//        String URL = "jdbc:mysql://localhost:3306/spring_tobi"; // 데이터베이스 URL
+//        String USER = "root"; // 데이터베이스 사용자 이름
+//        String PASSWORD = "1234"; // 데이터베이스 비밀번호
+//
+//        Class.forName("com.mysql.cj.jdbc.Driver");
+//
+//        return DriverManager.getConnection(URL, USER, PASSWORD);
+//    }
+    public abstract Connection getConnection() throws SQLException, ClassNotFoundException;
 
     public void add(User user) throws ClassNotFoundException, SQLException {
-        String URL = "jdbc:mysql://localhost:3306/spring_tobi"; // 데이터베이스 URL
-        String USER = "root"; // 데이터베이스 사용자 이름
-        String PASSWORD = "1234"; // 데이터베이스 비밀번호
 
-        Class.forName("com.mysql.cj.jdbc.Driver");
-        Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
-
+        Connection conn = getConnection();
         PreparedStatement ps = conn.prepareStatement("insert into user(id, name, password) values(?,?,?)");
 
         ps.setString(1, user.getId());
@@ -26,13 +32,8 @@ public class UserDao {
     }
 
     public User get(String id) throws ClassNotFoundException, SQLException {
-        String URL = "jdbc:mysql://localhost:3306/spring_tobi"; // 데이터베이스 URL
-        String USER = "root"; // 데이터베이스 사용자 이름
-        String PASSWORD = "1234"; // 데이터베이스 비밀번호
 
-        Class.forName("com.mysql.cj.jdbc.Driver");
-        Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
-
+        Connection conn = getConnection();
         PreparedStatement ps = conn.prepareStatement("SELECT * FROM user WHERE id = ?");
 
         ps.setString(1, id);

@@ -7,12 +7,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class UserDao {
+public class MessageDao {
 
-    private SimpleConnectionMaker simpleConnectionMaker;
+//    private SimpleConnectionMaker simpleConnectionMaker;
     private ConnectionMaker connectionMaker;
 
-    public UserDao(ConnectionMaker connectionMaker) {
+    public MessageDao(ConnectionMaker connectionMaker) {
 //        simpleConnectionMaker = new SimpleConnectionMaker();
 //        connectionMaker = new DConnectionMaker(); // 구체클래스
         this.connectionMaker = connectionMaker;

@@ -1,7 +1,8 @@
-package com.example.tobi.springtobi.ex_1_5.dao;
+package com.example.tobi.springtobi.ex_1_6.dao;
 
-import com.example.tobi.springtobi.ex_1_5.domain.User;
+import com.example.tobi.springtobi.ex_1_6.domain.User;
 
+import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -9,19 +10,18 @@ import java.sql.SQLException;
 
 public class UserDao {
 
-    private SimpleConnectionMaker simpleConnectionMaker;
-    private ConnectionMaker connectionMaker;
+    private DataSource dataSource;
 
-    public UserDao(ConnectionMaker connectionMaker) {
-//        simpleConnectionMaker = new SimpleConnectionMaker();
-//        connectionMaker = new DConnectionMaker(); // 구체클래스
-        this.connectionMaker = connectionMaker;
+
+    public UserDao(DataSource dataSource) {
+        this.dataSource = dataSource;
     }
+
 
 
     public void add(User user) throws ClassNotFoundException, SQLException {
 
-        Connection conn = connectionMaker.makeNewConnection();
+        Connection conn = dataSource.getConnection();
         PreparedStatement ps = conn.prepareStatement("insert into user(id, name, password) values(?,?,?)");
 
         ps.setString(1, user.getId());
@@ -35,7 +35,7 @@ public class UserDao {
 
     public User get(String id) throws ClassNotFoundException, SQLException {
 
-        Connection conn = connectionMaker.makeNewConnection();
+        Connection conn = dataSource.getConnection();
         PreparedStatement ps = conn.prepareStatement("SELECT * FROM user WHERE id = ?");
 
         ps.setString(1, id);

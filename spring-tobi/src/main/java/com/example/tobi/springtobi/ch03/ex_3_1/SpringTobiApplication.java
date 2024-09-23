@@ -1,4 +1,4 @@
-package com.example.tobi.springtobi;
+package com.example.tobi.springtobi.ch03.ex_3_1;
 
 import java.sql.SQLException;
 

@@ -8,60 +8,22 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public abstract class UserDao_v1 {
+public class UserDao_v2 {
 
     private DataSource dataSource;
 
-    public UserDao_v1(DataSource dataSource) {
+    public UserDao_v2(DataSource dataSource) {
         this.dataSource = dataSource;
     }
 
     public void add(User user) throws ClassNotFoundException, SQLException {
-
-        Connection conn = dataSource.getConnection();
-        PreparedStatement ps = conn.prepareStatement("insert into user(id, name, password) values(?,?,?)");
-
-        ps.setString(1, user.getId());
-        ps.setString(2, user.getName());
-        ps.setString(3, user.getPassword());
-        ps.executeUpdate();
-
-        ps.close();
-        conn.close();
+        StatementStrategy strategy = new AddStatement(user);
+        jdbcContextWithStatementStrategy(strategy);
     }
 
     public void deleteAll() throws SQLException {
-        Connection connection = null;
-        PreparedStatement ps = null;
-
-        try {
-            connection = dataSource.getConnection();
-            // 1. 메서드 추출방식...
-//            ps = makeStatement(connection);
-
-            // 2. 전략패턴
-            // 한계점
-            // 전략패턴은 필요에 따라 컨텍스트는 그대로 유지되면서 전략을 바꿔 쓸 수 있다는 것인데,
-            // 이렇게 컨텍스트 안에서 이미 구체적인 클래스인 DeleteAllStatement를 사용하도록 고정되어 있는 것이 문제다.
-            StatementStrategy stmt = new DeleteAllStatement();
-            ps = stmt.makePreparedStatement(connection);
-            ps.executeUpdate();
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } finally {
-            if (ps != null) {
-                ps.close();
-            }
-
-            if (connection != null) {
-                connection.close();
-            }
-        }
-
-
-        ps.close();
-        connection.close();
+        StatementStrategy strategy = new DeleteAllStatement();
+        jdbcContextWithStatementStrategy( strategy );
     }
 
     public User get(String id) throws ClassNotFoundException, SQLException {
@@ -113,6 +75,26 @@ public abstract class UserDao_v1 {
         }
     }
 
-    abstract PreparedStatement makeStatement(Connection conn) throws SQLException;
+    public void jdbcContextWithStatementStrategy(StatementStrategy strategy) throws SQLException {
+
+        Connection connection = null;
+        PreparedStatement ps = null;
+
+        try {
+            connection = dataSource.getConnection();
+            ps = strategy.makePreparedStatement(connection);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            if (ps != null) {
+                ps.close();
+            }
+
+            if (connection != null) {
+                connection.close();
+            }
+        }
+    }
 
 }

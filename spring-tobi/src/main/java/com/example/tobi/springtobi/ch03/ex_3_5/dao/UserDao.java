@@ -1,6 +1,6 @@
-package com.example.tobi.springtobi.ch03.ex_3_4.dao;
+package com.example.tobi.springtobi.ch03.ex_3_5.dao;
 
-import com.example.tobi.springtobi.ch03.ex_3_4.domain.User;
+import com.example.tobi.springtobi.ch03.ex_3_5.domain.User;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -17,41 +17,23 @@ public class UserDao {
         this.dataSource = dataSource;
         this.jdbcContext = new JdbcContext(dataSource);
     }
-//    public UserDao(DataSource dataSource, JdbcContext jdbcContext) {
-//        this.dataSource = dataSource;
-//        this.jdbcContext = jdbcContext;
-//    }
 
     public void add(User user) throws ClassNotFoundException, SQLException {
-        this.jdbcContext.workWithStatementStrategy(
-            new StatementStrategy() {
-                @Override
-                public PreparedStatement makePreparedStatement(Connection connection) throws SQLException {
-                    PreparedStatement ps = connection.prepareStatement("insert into user(id, name, password) values(?,?,?)");
-
-                    ps.setString(1, user.getId());
-                    ps.setString(2, user.getName());
-                    ps.setString(3, user.getPassword());
-                    ps.executeUpdate();
-
-                    return ps;
+        this.jdbcContext.executeSql(
+                "insert into user(id, name, password) values(?,?,?)",
+                new PreparedStatementSetter() {
+                    @Override
+                    public void setParmeters(PreparedStatement ps) throws SQLException {
+                        ps.setString(1, user.getId());
+                        ps.setString(2, user.getName());
+                        ps.setString(3, user.getPassword());
+                    }
                 }
-            }
         );
     }
 
     public void deleteAll() throws SQLException {
-        this.jdbcContext.workWithStatementStrategy(
-            new StatementStrategy() {
-                @Override
-                public PreparedStatement makePreparedStatement(Connection connection) throws SQLException {
-                    PreparedStatement ps;
-                    ps = connection.prepareStatement("delete from user");
-
-                    return ps;
-                }
-            }
-        );
+        this.jdbcContext.executeSql("delete from user");
     }
 
     public User get(String id) throws ClassNotFoundException, SQLException {

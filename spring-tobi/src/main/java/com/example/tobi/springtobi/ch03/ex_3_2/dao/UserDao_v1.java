@@ -1,6 +1,6 @@
-package com.example.tobi.springtobi.ch03.ex_3_1.dao;
+package com.example.tobi.springtobi.ch03.ex_3_2.dao;
 
-import com.example.tobi.springtobi.ch03.ex_3_1.domain.User;
+import com.example.tobi.springtobi.ch03.ex_3_2.domain.User;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -8,11 +8,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class UserDao {
+public abstract class UserDao_v1 {
 
     private DataSource dataSource;
 
-    public UserDao(DataSource dataSource) {
+    public UserDao_v1(DataSource dataSource) {
         this.dataSource = dataSource;
     }
 
@@ -106,11 +106,6 @@ public class UserDao {
         }
     }
 
-    private PreparedStatement makeStatement(Connection conn) throws SQLException {
-        PreparedStatement ps;
-        ps = conn.prepareStatement("delete from user");
-
-        return ps;
-    }
+    abstract PreparedStatement makeStatement(Connection conn) throws SQLException;
 
 }

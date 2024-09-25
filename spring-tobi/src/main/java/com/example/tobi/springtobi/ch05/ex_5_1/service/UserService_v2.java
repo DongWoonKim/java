@@ -8,6 +8,9 @@ import java.util.List;
 
 public class UserService_v2 {
 
+    public static final int MIN_LOGCOUNT_FOR_SILVER = 50;
+    public static final int MIN_RECCOMMEND_FOR_GOLD = 30;
+
     private UserDao userDao;
 
     public UserService_v2(UserDao userDao) {
@@ -37,9 +40,9 @@ public class UserService_v2 {
 
         switch (currentLevel) {
             case BASIC:
-                return (user.getLogin() >= 50);
+                return (user.getLogin() >= MIN_LOGCOUNT_FOR_SILVER);
             case SILVER:
-                return (user.getRecommend() >= 30);
+                return (user.getRecommend() >= MIN_RECCOMMEND_FOR_GOLD);
             case GOLD:
                 return false;
             default:

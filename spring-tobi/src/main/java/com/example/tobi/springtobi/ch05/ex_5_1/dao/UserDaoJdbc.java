@@ -13,7 +13,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-public class UserDaoJdbc {
+public class UserDaoJdbc implements UserDao {
 
     private JdbcTemplate jdbcTemplate;
     private RowMapper<User> rowMapper;
@@ -67,7 +67,7 @@ public class UserDaoJdbc {
         );
     }
 
-    public int getCount() throws SQLException {
+    public int getCount() {
         return this.jdbcTemplate.queryForObject(
                 "select count(*) from user",
                 Integer.class

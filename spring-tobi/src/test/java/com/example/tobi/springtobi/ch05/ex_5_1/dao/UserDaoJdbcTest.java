@@ -12,6 +12,9 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import java.util.Arrays;
 import java.util.List;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
+
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = DaoFactory.class)
 class UserDaoJdbcTest {
@@ -34,10 +37,22 @@ class UserDaoJdbcTest {
 
     @Test
     void update() {
+        // given
+        User user1 = users.get(0);
+        userDao.add(user1);
 
+        user1.setName("오민규");
+        user1.setPassword("springno6");
+        user1.setLevel(Level.GOLD);
+        user1.setLogin(1000);
+        user1.setRecommend(999);
 
+        // when
+        userDao.update(user1);
 
-
+        // then
+        User updatedUser = userDao.get(user1.getId());
+        assertThat(user1.getName()).isEqualTo(updatedUser.getName());
     }
 
 }

@@ -3,7 +3,9 @@ package com.example.tobi.springtobi.ch05.ex_5_2.dao;
 import com.example.tobi.springtobi.ch05.ex_5_2.service.UserService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.jdbc.datasource.SimpleDriverDataSource;
+import org.springframework.transaction.PlatformTransactionManager;
 
 import javax.sql.DataSource;
 
@@ -18,6 +20,11 @@ public class DaoFactory {
     @Bean
     public UserService userService() {
         return new UserService(userDao());
+    }
+
+    @Bean
+    public PlatformTransactionManager transactionManager() {
+        return new DataSourceTransactionManager(dataSource());
     }
 
     @Bean

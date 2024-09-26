@@ -11,7 +11,9 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.transaction.PlatformTransactionManager;
 
+import javax.sql.DataSource;
 import java.util.Arrays;
 import java.util.List;
 
@@ -23,6 +25,11 @@ class UserServiceTest {
     private UserDao userDao;
     @Autowired
     private UserService userService;
+    @Autowired
+    private DataSource dataSource;
+    @Autowired
+    private PlatformTransactionManager transactionManager;
+
     List<User> users;
 
     @BeforeEach
@@ -70,7 +77,61 @@ class UserServiceTest {
             testUserService.upgradelevels();
         } catch (Exception e) {}
         System.out.println(userDao.get("joytouch").getLevel());
-        System.out.println(userDao.get("madnite1").getLevel());
+
+    }
+
+    @Test
+    void upgradeAllOrNothing_v2() {
+        UserService testUserService = new UserService.TestUserService(users.get(3).getId());
+        testUserService.setUserDao(userDao);
+        testUserService.setDataSource(dataSource);
+
+        for (User user : users) {
+            userDao.add(user);
+        }
+
+        System.out.println(userDao.get("joytouch").getLevel());
+        try {
+            testUserService.upgradelevelsV2();
+        } catch (Exception e) {}
+        System.out.println(userDao.get("joytouch").getLevel());
+
+    }
+
+    @Test
+    void upgradeAllOrNothing_v3() {
+        UserService testUserService = new UserService.TestUserService(users.get(3).getId());
+        testUserService.setUserDao(userDao);
+        testUserService.setDataSource(dataSource);
+
+        for (User user : users) {
+            userDao.add(user);
+        }
+
+        System.out.println(userDao.get("joytouch").getLevel());
+        try {
+            testUserService.upgradelevelsV3();
+        } catch (Exception e) {}
+        System.out.println(userDao.get("joytouch").getLevel());
+
+    }
+
+    @Test
+    void upgradeAllOrNothing_v4() {
+        UserService testUserService = new UserService.TestUserService(users.get(3).getId());
+        testUserService.setUserDao(userDao);
+        testUserService.setDataSource(dataSource);
+        testUserService.setTransactionManager(transactionManager);
+
+        for (User user : users) {
+            userDao.add(user);
+        }
+
+        System.out.println(userDao.get("joytouch").getLevel());
+        try {
+            testUserService.upgradelevelsV4();
+        } catch (Exception e) {}
+        System.out.println(userDao.get("joytouch").getLevel());
 
     }
 

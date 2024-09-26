@@ -56,6 +56,25 @@ class UserServiceTest {
 
     }
 
+    @Test
+    void upgradeAllOrNothing() {
+        UserService testUserService = new UserService.TestUserService(users.get(3).getId());
+        testUserService.setUserDao(userDao);
+
+        for (User user : users) {
+            userDao.add(user);
+        }
+
+        System.out.println(userDao.get("joytouch").getLevel());
+        try {
+            testUserService.upgradelevels();
+        } catch (Exception e) {}
+        System.out.println(userDao.get("joytouch").getLevel());
+        System.out.println(userDao.get("madnite1").getLevel());
+
+    }
+
+
     private void checkLevel(User user, Level expectedLevel) {
         User userUpdate = userDao.get(user.getId());
         Assertions.assertThat(userUpdate.getLevel()).isEqualTo(expectedLevel);

@@ -7,10 +7,7 @@ import com.example.tobi.springbootbasic.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -33,9 +30,22 @@ public class UserController {
         return "sign-up";
     }
 
+    @GetMapping("/update/{id}")
+    public String updateForm(@PathVariable Long id, Model model) {
+        // 로직을 추가... -> id를 조건으로 조회한 데이터를
+        // 프론트(수정)화면에 뿌릴 것.
+        return "user-update";
+    }
+
+//    @GetMapping("/update")
+//    public String updateForm(@RequestParam("id") Long id, Model model) {
+//        System.out.println("id :: " + id);
+//        return "user-update";
+//    }
+
     @PostMapping("/register")
     public String createUser(@RequestBody MemberCreateRequestDTO request) {
-        System.out.println(request);
+        userService.createUser( request.toUser() );
         return "redirect:/users";
     }
 

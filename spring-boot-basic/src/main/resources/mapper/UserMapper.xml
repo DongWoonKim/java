@@ -8,4 +8,8 @@
         SELECT * FROM user;
     </select>
 
+    <insert id="insertUser" parameterType="com.example.tobi.springbootbasic.model.User">
+        INSERT INTO user(name, email, userid, password) VALUES ( #{name}, #{email}, #{userid}, #{password} );
+    </insert>
+
 </mapper>

@@ -14,6 +14,7 @@
             <th>UserID</th>
             <th>Name</th>
             <th>Email</th>
+            <th></th>
         </tr>
         </thead>
         <tbody>
@@ -22,6 +23,8 @@
             <td th:text="${user.userid}"></td>
             <td th:text="${user.name}"></td>
             <td th:text="${user.email}"></td>
+            <td><a th:href="@{/users/update/{id}(id=${user.id})}" class="btn btn-primary btn-sm">수정</a></td>
+<!--            <td><a th:href="@{/users/update(id=${user.id})}" class="btn btn-primary btn-sm">수정</a></td>-->
         </tr>
         </tbody>
     </table>

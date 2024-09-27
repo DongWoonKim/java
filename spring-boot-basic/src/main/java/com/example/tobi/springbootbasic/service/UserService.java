@@ -33,4 +33,7 @@ public class UserService {
                 .collect(Collectors.toList());
     }
 
+    public void createUser(User user) {
+        userMapper.insertUser(user);
+    }
 }

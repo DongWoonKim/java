@@ -1,8 +1,7 @@
 package com.example.tobi.springbootbasic.controller;
 
 import com.example.tobi.springbootbasic.dto.MemberCreateRequestDTO;
-import com.example.tobi.springbootbasic.dto.MemberListResponseDTO;
-import com.example.tobi.springbootbasic.model.User;
+import com.example.tobi.springbootbasic.dto.MemberResponseDTO;
 import com.example.tobi.springbootbasic.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -20,7 +19,7 @@ public class UserController {
 
     @GetMapping
     public String findAllUsers(Model model) {
-        List<MemberListResponseDTO> users = userService.findAll();
+        List<MemberResponseDTO> users = userService.findAll();
         model.addAttribute("users", users);
         return "user-list";
     }
@@ -34,6 +33,8 @@ public class UserController {
     public String updateForm(@PathVariable Long id, Model model) {
         // 로직을 추가... -> id를 조건으로 조회한 데이터를
         // 프론트(수정)화면에 뿌릴 것.
+        MemberResponseDTO user = userService.findById(id);
+        model.addAttribute("user", user);
         return "user-update";
     }
 

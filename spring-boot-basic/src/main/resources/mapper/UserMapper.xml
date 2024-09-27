@@ -8,6 +8,10 @@
         SELECT * FROM user;
     </select>
 
+    <select id="findById" parameterType="long" resultType="com.example.tobi.springbootbasic.model.User">
+        SELECT * FROM user WHERE id = #{id};
+    </select>
+
     <insert id="insertUser" parameterType="com.example.tobi.springbootbasic.model.User">
         INSERT INTO user(name, email, userid, password) VALUES ( #{name}, #{email}, #{userid}, #{password} );
     </insert>

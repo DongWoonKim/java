@@ -1,6 +1,6 @@
 package com.example.tobi.springbootbasic.model;
 
-import com.example.tobi.springbootbasic.dto.MemberListResponseDTO;
+import com.example.tobi.springbootbasic.dto.MemberResponseDTO;
 import lombok.*;
 
 @Getter
@@ -13,8 +13,8 @@ public class User {
     private String userid;
     private String password;
 
-    public MemberListResponseDTO toMemberListResponseDTO() {
-        return MemberListResponseDTO.builder()
+    public MemberResponseDTO toMemberResponseDTO() {
+        return MemberResponseDTO.builder()
                 .id(id)
                 .name(name)
                 .email(email)

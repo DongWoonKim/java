@@ -20,7 +20,6 @@ public class UserController {
     @GetMapping
     public String findAllUsers(Model model) {
         List<MemberListResponseDTO> users = userService.findAll();
-        System.out.println(users.size());
         model.addAttribute("users", users);
         return "user-list";
     }

@@ -1,6 +1,7 @@
 package com.example.tobi.springbootbasic.controller;
 
 import com.example.tobi.springbootbasic.dto.MemberCreateRequestDTO;
+import com.example.tobi.springbootbasic.dto.MemberDeleteUserResponseDTO;
 import com.example.tobi.springbootbasic.dto.MemberResponseDTO;
 import com.example.tobi.springbootbasic.dto.MemberUpdateRequestDTO;
 import com.example.tobi.springbootbasic.service.UserService;
@@ -41,6 +42,27 @@ public class UserController {
         return "user-update";
     }
 
+    @GetMapping("/delete")
+    public String deleteUser(
+            @RequestParam("id") Long id,
+            @RequestParam("userid") String userid,
+            Model model
+    ) {
+        model.addAttribute(
+                "user",
+                MemberDeleteUserResponseDTO.builder()
+                    .id(id)
+                    .userid(userid)
+                    .build()
+        );
+        return "user-delete";
+    }
+
+    @DeleteMapping
+    public ResponseEntity<HttpStatus> deleteUser() {
+        return ResponseEntity.ok(HttpStatus.OK);
+    }
+
 //    @GetMapping("/update")
 //    public String updateForm(@RequestParam("id") Long id, Model model) {
 //        System.out.println("id :: " + id);
@@ -54,9 +76,10 @@ public class UserController {
     }
 
     @PutMapping
-    public ResponseEntity<HttpStatus> update(@RequestBody MemberUpdateRequestDTO request) {
+    public ResponseEntity<String> update(@RequestBody MemberUpdateRequestDTO request) {
         userService.updateUser( request.toUser() );
-        return ResponseEntity.ok(HttpStatus.OK);
+        return ResponseEntity.ok("Updated");
     }
+
 
 }

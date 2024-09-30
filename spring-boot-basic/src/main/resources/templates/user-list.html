@@ -26,7 +26,7 @@
             <td>
                 <a th:href="@{/users/update/{id}(id=${user.id})}" class="btn btn-primary btn-sm">수정</a>
 <!--            <td><a th:href="@{/users/update(id=${user.id})}" class="btn btn-primary btn-sm">수정</a>-->
-                <a th:href="@{/users/delete/{id}(id=${user.id})}" class="btn btn-danger btn-sm">삭제</a>
+                <a th:href="@{/users/delete(id=${user.id},userid=${user.userid})}" class="btn btn-danger btn-sm">삭제</a>
             </td>
         </tr>
         </tbody>

@@ -51,8 +51,19 @@
       body: JSON.stringify(formData)
     })
     .then(response => {
+      console.log('response :: ', response)
+      if (!response.ok) {
+        throw new Error("Failed Update!")
+      }
+
       window.location.href = '/users';
+      // return response.text();
     })
+    // .then(data => {
+    //   if (data === 'Updated') {
+    //     window.location.href = '/users';
+    //   }
+    // })
     .catch(error => {
       console.error('Error:', error);
       alert('요청 처리 중 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.');

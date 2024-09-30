@@ -16,4 +16,15 @@
         INSERT INTO user(name, email, userid, password) VALUES ( #{name}, #{email}, #{userid}, #{password} );
     </insert>
 
+    <update id="updateUser" parameterType="com.example.tobi.springbootbasic.model.User">
+        UPDATE
+            user
+        SET
+            name = #{name},
+            email = #{email},
+            userid = #{userid}
+        WHERE
+            id = #{id};
+    </update>
+
 </mapper>

@@ -6,6 +6,9 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
+
+<input type="hidden" id="id" th:value="${user.id}">
+
 <div class="container mt-5">
   <h2 class="mb-4">회원 수정</h2>
   <form id="registrationForm">
@@ -34,10 +37,10 @@
 <script>
   function submitForm() {
     const formData = {
+      id: document.getElementById('id').value,
       name: document.getElementById('name').value,
       email: document.getElementById('email').value,
-      userid: document.getElementById('userid').value,
-      password: document.getElementById('password').value
+      userid: document.getElementById('userid').value
     };
 
     fetch('/users', {
@@ -48,11 +51,7 @@
       body: JSON.stringify(formData)
     })
     .then(response => {
-      if (response.redirected) {
-        window.location.href = response.url;
-      } else {
-        return response.text();
-      }
+      window.location.href = '/users';
     })
     .catch(error => {
       console.error('Error:', error);

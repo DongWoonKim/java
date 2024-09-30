@@ -2,8 +2,11 @@ package com.example.tobi.springbootbasic.controller;
 
 import com.example.tobi.springbootbasic.dto.MemberCreateRequestDTO;
 import com.example.tobi.springbootbasic.dto.MemberResponseDTO;
+import com.example.tobi.springbootbasic.dto.MemberUpdateRequestDTO;
 import com.example.tobi.springbootbasic.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -48,6 +51,12 @@ public class UserController {
     public String createUser(@RequestBody MemberCreateRequestDTO request) {
         userService.createUser( request.toUser() );
         return "redirect:/users";
+    }
+
+    @PutMapping
+    public ResponseEntity<HttpStatus> update(@RequestBody MemberUpdateRequestDTO request) {
+        userService.updateUser( request.toUser() );
+        return ResponseEntity.ok(HttpStatus.OK);
     }
 
 }

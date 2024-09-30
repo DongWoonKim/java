@@ -27,4 +27,15 @@
             id = #{id};
     </update>
 
+    <delete id="deleteUser" parameterType="com.example.tobi.springbootbasic.model.User">
+        DELETE FROM
+                   user
+        WHERE
+            id = #{id}
+        AND
+            userid = #{userid}
+        AND
+            password = #{password};
+    </delete>
+
 </mapper>

@@ -1,9 +1,6 @@
 package com.example.tobi.springbootbasic.controller;
 
-import com.example.tobi.springbootbasic.dto.MemberCreateRequestDTO;
-import com.example.tobi.springbootbasic.dto.MemberDeleteUserResponseDTO;
-import com.example.tobi.springbootbasic.dto.MemberResponseDTO;
-import com.example.tobi.springbootbasic.dto.MemberUpdateRequestDTO;
+import com.example.tobi.springbootbasic.dto.*;
 import com.example.tobi.springbootbasic.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -59,7 +56,8 @@ public class UserController {
     }
 
     @DeleteMapping
-    public ResponseEntity<HttpStatus> deleteUser() {
+    public ResponseEntity<HttpStatus> deleteUser(@RequestBody MemberDeleteRequestDTO request) {
+        userService.deleteUser(request.toUser());
         return ResponseEntity.ok(HttpStatus.OK);
     }
 

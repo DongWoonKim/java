@@ -63,4 +63,21 @@ public class CookieController {
         return "result-cookie";
     }
 
+    @GetMapping("/delete-cookie")
+    public String deleteCookie(
+            HttpServletResponse response,
+            Model model
+    ) {
+
+        Cookie cookie = new Cookie("username", "");
+        cookie.setMaxAge(0);
+        cookie.setPath("/");
+
+        response.addCookie(cookie);
+
+        model.addAttribute("message", "쿠키가 삭제되었습니다.");
+
+        return "result-cookie";
+    }
+
 }

@@ -58,9 +58,9 @@ let loadBoard = (page, size) => {
                         `
                     <tr>
                         <td>${item.id}</td>
-                        <td>${item.title}</td>
+                        <td><a href="/detail?id=${item.id}">${item.title}</a></td>
                         <td>${item.userId}</td>
-                        <td>${item.createdAt}</td>
+                        <td>${item.created}</td>
                     </tr>
                     `
                     );

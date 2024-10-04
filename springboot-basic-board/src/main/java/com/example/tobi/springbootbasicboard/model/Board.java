@@ -9,5 +9,5 @@ public class Board {
     private Long id;
     private String title;
     private String userId;
-    private LocalDateTime createdAt;
+    private LocalDateTime created;
 }

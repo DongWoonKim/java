@@ -14,7 +14,7 @@
     <h1 th:text="|${userName}님 환영합니다.|"></h1>
     <input id="hiddenUserId" type="hidden" th:value="${userId}">
     <input type="hidden" th:value="${userName}">
-    <button id="writeBtn" class="btn">글쓰기</button>
+    <a th:href="@{/write}" class="btn">글쓰기</a>
     <!-- 게시판 영역 -->
     <div id="board">
         <table>

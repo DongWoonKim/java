@@ -5,6 +5,7 @@ import com.example.tobi.springbootbasicboard.dto.SignInResponseDTO;
 import com.example.tobi.springbootbasicboard.dto.SignUpRequestDTO;
 import com.example.tobi.springbootbasicboard.dto.SignUpResponseDTO;
 import com.example.tobi.springbootbasicboard.service.MemberService;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -27,9 +28,9 @@ public class MemberApiController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<SignInResponseDTO> signIn(@RequestBody SignInRequestDTO signInRequestDTO) {
+    public ResponseEntity<SignInResponseDTO> signIn(@RequestBody SignInRequestDTO signInRequestDTO, HttpSession session) {
         return ResponseEntity.ok(
-                memberService.signIn(signInRequestDTO.toMember())
+                memberService.signIn(signInRequestDTO.toMember(), session)
         );
     }
 

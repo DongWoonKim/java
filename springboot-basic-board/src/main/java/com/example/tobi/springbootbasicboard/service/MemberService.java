@@ -28,7 +28,6 @@ public class MemberService {
         }
         
         // 세션 설정
-        System.out.println("getMembe :: " +getMember);
         session.setAttribute("userId", getMember.getUserId());
         session.setAttribute("userName", getMember.getUserName());
 

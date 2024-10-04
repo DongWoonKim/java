@@ -3,4 +3,17 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.tobi.springbootbasicboard.mapper.BoardMapper">
 
+    <select id="selectBoardList" parameterType="com.example.tobi.springbootbasicboard.model.Paging" resultType="com.example.tobi.springbootbasicboard.model.Board">
+        SELECT
+            *
+        FROM
+            article
+        ORDER BY id DESC
+        LIMIT #{offset}, #{size};
+    </select>
+
+    <select id="countBoards" resultType="Integer">
+        SELECT COUNT(*) FROM article;
+    </select>
+
 </mapper>

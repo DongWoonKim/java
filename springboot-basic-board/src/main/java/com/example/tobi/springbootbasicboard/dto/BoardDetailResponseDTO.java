@@ -1,12 +1,13 @@
-package com.example.tobi.springbootbasicboard.model;
+package com.example.tobi.springbootbasicboard.dto;
 
+import lombok.Builder;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
 
 @Getter
-public class Board {
-    private Long id;
+@Builder
+public class BoardDetailResponseDTO {
     private String title;
     private String content;
     private String userId;

@@ -25,4 +25,10 @@
         SELECT COUNT(*) FROM article;
     </select>
 
+    <select id="selectBoardDetail"
+            parameterType="Long"
+            resultMap="boardResultMap">
+        SELECT * FROM article WHERE id = #{id};
+    </select>
+
 </mapper>

@@ -1,24 +1,22 @@
 package com.example.tobi.springbootbasicboard.controller;
 
+import com.example.tobi.springbootbasicboard.dto.BoardDetailResponseDTO;
 import com.example.tobi.springbootbasicboard.dto.BoardListResponseDTO;
 import com.example.tobi.springbootbasicboard.model.Board;
 import com.example.tobi.springbootbasicboard.service.BoardService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/api/board")
 public class BoardApiController {
 
     private final BoardService boardService;
 
-    @GetMapping("/api/board")
+    @GetMapping
     public BoardListResponseDTO getBoardList(
             @RequestParam(defaultValue = "1") int page,
             @RequestParam(defaultValue = "10") int size
@@ -35,6 +33,18 @@ public class BoardApiController {
         return BoardListResponseDTO.builder()
                 .boards(boards)
                 .last(last)
+                .build();
+    }
+
+
+    @GetMapping("/{id}")
+    public BoardDetailResponseDTO getBoardDetail(@PathVariable long id) {
+        Board boardDetail = boardService.getBoardDetail(id);
+        return BoardDetailResponseDTO.builder()
+                .title(boardDetail.getTitle())
+                .content(boardDetail.getContent())
+                .created(boardDetail.getCreated())
+                .userId(boardDetail.getUserId())
                 .build();
     }
 

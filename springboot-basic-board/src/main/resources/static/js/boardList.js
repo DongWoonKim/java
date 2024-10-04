@@ -49,8 +49,8 @@ let loadBoard = (page, size) => {
                 // 게시글이 없는 경우 메시지 출력
                 $('#boardContent').append(
                     `<tr>
-                            <td colspan="4" style="text-align: center;">글이 존재하지 않습니다.</td>
-                        </tr>`
+                        <td colspan="4" style="text-align: center;">글이 존재하지 않습니다.</td>
+                    </tr>`
                 );
             } else {
                 response.boards.forEach((item) => {

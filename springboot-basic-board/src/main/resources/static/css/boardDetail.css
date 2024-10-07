@@ -78,6 +78,14 @@ h1 {
 }
 
 
+
+/* 버튼이 비활성화된 경우 스타일 */
+#editBtn:disabled {
+    background-color: #cccccc; /* 비활성화 상태의 색 */
+    cursor: not-allowed; /* 커서를 변경하여 비활성화된 느낌을 줌 */
+    color: #666666; /* 텍스트 색상 변경 */
+}
+
 #deleteBtn {
     background-color: #f44336; /* 빨간색 배경 */
     color: white;
@@ -91,4 +99,11 @@ h1 {
 /* Hover 시 배경 색상 변경 */
 #deleteBtn:hover {
     background-color: #e53935; /* 조금 더 어두운 빨간색 */
+}
+
+/* 버튼이 비활성화된 경우 스타일 */
+#deleteBtn:disabled {
+    background-color: #cccccc; /* 비활성화 상태의 색 */
+    cursor: not-allowed; /* 커서를 변경하여 비활성화된 느낌을 줌 */
+    color: #666666; /* 텍스트 색상 변경 */
 }

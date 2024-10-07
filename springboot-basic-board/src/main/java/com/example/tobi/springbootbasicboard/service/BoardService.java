@@ -1,5 +1,6 @@
 package com.example.tobi.springbootbasicboard.service;
 
+import com.example.tobi.springbootbasicboard.dto.BoardDeleteRequestDTO;
 import com.example.tobi.springbootbasicboard.mapper.BoardMapper;
 import com.example.tobi.springbootbasicboard.model.Board;
 import com.example.tobi.springbootbasicboard.model.Paging;
@@ -55,5 +56,10 @@ public class BoardService {
 
     public Resource downloadFile(String fileName) {
         return fileService.downloadFile(fileName);
+    }
+
+    public void deleteArticle(long id, BoardDeleteRequestDTO request) {
+        boardMapper.deleteBoardById(id);
+        fileService.deleteFile(request.getFilePath());
     }
 }

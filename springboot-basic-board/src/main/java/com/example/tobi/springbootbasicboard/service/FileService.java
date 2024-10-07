@@ -46,4 +46,13 @@ public class FileService {
             throw new RuntimeException(e);
         }
     }
+
+    public void deleteFile(String filePath) {
+        try {
+            Path path = Paths.get(filePath);
+            Files.deleteIfExists(path);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

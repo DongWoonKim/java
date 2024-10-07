@@ -14,11 +14,11 @@ let deleteArticle = () => {
         url: '/api/board/' + resourceId, // 실제 서버 API URL 및 삭제할 리소스 ID
         data: JSON.stringify({ filePath: filePath }), // filePath를 JSON으로 서버에 전송
         contentType: 'application/json', // JSON 형식으로 전송
-        success: function(response) {
+        success: (response) => {
             alert('리소스가 성공적으로 삭제되었습니다.');
             window.location.href = '/'; // 성공 후 목록 페이지로 이동
         },
-        error: function(xhr, status, error) {
+        error: (error) => {
             alert('리소스 삭제 중 오류가 발생했습니다.');
             console.error('Error:', error);
         }

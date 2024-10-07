@@ -1,36 +1,40 @@
 
 $(document).ready(() => {
     checkSession();
-    loadBoardDetail();
+    saved();
 });
+
+let saved = () => {
+    $('#submitBtn').on('click', (event) => {
+        event.preventDefault();
+
+        let formData = new FormData($('#writeForm')[0]);
+
+        $.ajax({
+            type: 'POST',
+            url: '/api/board', // 서버의 엔드포인트 URL
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function(response) {
+                // 성공 시 실행될 콜백 함수
+                alert('게시글이 성공적으로 등록되었습니다!')
+                // 성공 후 다른 페이지로 이동하거나 처리할 코드 작성 가능
+                window.location.href = '/';
+            },
+            error: function(error) {
+                // 실패 시 실행될 콜백 함수
+                console.error('오류 발생:', error);
+                alert('게시글 등록 중 오류가 발생하였습니다.');
+            }
+        });
+
+    });
+}
 
 let checkSession = () => {
     let hUserId = $('#hiddenUserId').val();
 
     if (hUserId == null || hUserId === '')
         window.location.href = "/member/login";
-}
-
-let loadBoardDetail = () => {
-
-    let hId = $('#hiddenId').val();
-    let hUserId = $('#hiddenUserId').val();
-
-    $.ajax({
-        type: 'GET',
-        url: '/api/board/' + hId,
-        success: (response) => {
-            $('#title').text(response.title);
-            $('#content').text(response.content);
-            $('#userId').text(response.userId);
-            $('#created').text(response.created);
-            if (hUserId != response.userId) {
-                $('#editBtn').prop('disabled', true);
-            }
-        },
-        error: function (error) {
-            console.error('오류 발생:', error);
-            alert('상세 데이터를 불러오는데 오류가 발생했습니다.');
-        }
-    });
 }

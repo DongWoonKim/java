@@ -5,7 +5,9 @@ import com.example.tobi.springbootbasicboard.dto.BoardListResponseDTO;
 import com.example.tobi.springbootbasicboard.model.Board;
 import com.example.tobi.springbootbasicboard.service.BoardService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -46,6 +48,17 @@ public class BoardApiController {
                 .created(boardDetail.getCreated())
                 .userId(boardDetail.getUserId())
                 .build();
+    }
+
+    @PostMapping
+    public ResponseEntity<Void> saveArticle(
+            @RequestParam("title") String title,
+            @RequestParam("hiddenUserId") String userId,
+            @RequestParam("content") String content,
+            @RequestPart("file") MultipartFile file
+    ) {
+        boardService.saveArticle(userId, title, content, file);
+        return ResponseEntity.ok().build();
     }
 
 }

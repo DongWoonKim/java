@@ -8,7 +8,15 @@
         <result property="userId" column="user_id"/>
         <result property="title" column="title"/>
         <result property="created" column="created"/>
+        <result property="filePath" column="file_path"/>
     </resultMap>
+
+    <insert id="saveArticle" parameterType="com.example.tobi.springbootbasicboard.model.Board">
+        INSERT INTO
+            article(user_id, title, content, file_path)
+        VALUES
+            (#{userId}, #{title}, #{content}, #{filePath});
+    </insert>
 
     <select id="selectBoardList"
             parameterType="com.example.tobi.springbootbasicboard.model.Paging"

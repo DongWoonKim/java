@@ -43,7 +43,6 @@ let loadBoard = (page, size) => {
             size: size
         },
         success: (response) => {
-            console.log('response', response)
             $('#boardContent').empty(); // 기존 게시글 내용 비우기
             if (response.boards.length <= 0) {
                 // 게시글이 없는 경우 메시지 출력

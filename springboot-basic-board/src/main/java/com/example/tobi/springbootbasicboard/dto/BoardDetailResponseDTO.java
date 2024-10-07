@@ -11,5 +11,6 @@ public class BoardDetailResponseDTO {
     private String title;
     private String content;
     private String userId;
+    private String filePath;
     private LocalDateTime created;
 }

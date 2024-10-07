@@ -15,7 +15,6 @@ let deleteArticle = () => {
         data: JSON.stringify({ filePath: filePath }), // filePath를 JSON으로 서버에 전송
         contentType: 'application/json', // JSON 형식으로 전송
         success: function(response) {
-            console.log('res :: ', response);
             alert('리소스가 성공적으로 삭제되었습니다.');
             window.location.href = '/'; // 성공 후 목록 페이지로 이동
         },
@@ -37,12 +36,10 @@ let loadBoardDetail = () => {
 
     let hId = $('#hiddenId').val();
     let hUserId = $('#hiddenUserId').val();
-
     $.ajax({
         type: 'GET',
         url: '/api/board/' + hId,
         success: (response) => {
-            console.log('response :: ', response);
             $('#title').text(response.title);
             $('#content').text(response.content);
             $('#userId').text(response.userId);
@@ -57,7 +54,7 @@ let loadBoardDetail = () => {
             if (response.filePath && response.filePath.length > 0) {
                 let filePath = response.filePath;
                 $('#hiddenFilePath').val(filePath)
-                let fileName = filePath.substring(filePath.lastIndexOf('/') + 1); // 파일명 추출
+                let fileName = filePath.substring(filePath.lastIndexOf('\\') + 1); // 파일명 추출
                 let fileElement = `
                             <li>
                                 <a href="/api/board/file/download/${fileName}">${fileName}</a> <!-- 다운로드 링크 -->

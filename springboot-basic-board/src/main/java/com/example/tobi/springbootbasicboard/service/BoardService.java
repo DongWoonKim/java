@@ -4,6 +4,7 @@ import com.example.tobi.springbootbasicboard.mapper.BoardMapper;
 import com.example.tobi.springbootbasicboard.model.Board;
 import com.example.tobi.springbootbasicboard.model.Paging;
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -50,5 +51,9 @@ public class BoardService {
                         .build()
         );
 
+    }
+
+    public Resource downloadFile(String fileName) {
+        return fileService.downloadFile(fileName);
     }
 }

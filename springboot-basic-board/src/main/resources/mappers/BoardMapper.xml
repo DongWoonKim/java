@@ -36,7 +36,9 @@
     <select id="selectBoardDetail"
             parameterType="Long"
             resultMap="boardResultMap">
-        SELECT * FROM article WHERE id = #{id};
+        SELECT
+            id, title, content, user_id, file_path, created
+        FROM article WHERE id = #{id};
     </select>
 
 </mapper>

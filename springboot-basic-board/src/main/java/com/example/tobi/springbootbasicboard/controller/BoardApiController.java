@@ -5,10 +5,16 @@ import com.example.tobi.springbootbasicboard.dto.BoardListResponseDTO;
 import com.example.tobi.springbootbasicboard.model.Board;
 import com.example.tobi.springbootbasicboard.service.BoardService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 @RestController
@@ -47,6 +53,7 @@ public class BoardApiController {
                 .content(boardDetail.getContent())
                 .created(boardDetail.getCreated())
                 .userId(boardDetail.getUserId())
+                .filePath(boardDetail.getFilePath())
                 .build();
     }
 
@@ -59,6 +66,20 @@ public class BoardApiController {
     ) {
         boardService.saveArticle(userId, title, content, file);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/file/download/{fileName}")
+    public ResponseEntity<Resource> downloadFile(@PathVariable String fileName) throws UnsupportedEncodingException {
+        Resource resource = boardService.downloadFile(fileName);
+
+        // 한글 파일명을 URL 인코딩
+        String encodedFileName = URLEncoder.encode(resource.getFilename(), StandardCharsets.UTF_8.toString());
+
+        // 파일 다운로드 처리
+        return ResponseEntity.ok()
+                .contentType(MediaType.APPLICATION_OCTET_STREAM)
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename*=UTF-8''" + encodedFileName)
+                .body(resource);
     }
 
 }

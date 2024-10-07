@@ -1,10 +1,13 @@
 package com.example.tobi.springbootbasicboard.service;
 
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -28,4 +31,19 @@ public class FileService {
         }
     }
 
+    public Resource downloadFile(String fileName) {
+        try {
+            // 파일 경로 설정
+            Path filePath = Paths.get(UPLOADED_FOLDER + fileName).normalize();
+            Resource resource = new UrlResource(filePath.toUri());
+
+            if (!resource.exists() || !resource.isReadable()) {
+                throw new RuntimeException("파일을 찾을 수 없거나 읽을 수 없습니다.");
+            }
+
+            return resource;
+        } catch (MalformedURLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

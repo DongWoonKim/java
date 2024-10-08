@@ -37,7 +37,7 @@
 
     <div class="article-footer">
         <button class="btn" th:onclick="|location.href='@{/}'|">목록으로 돌아가기</button>
-        <button id="editBtn" class="btn edit-btn">수정</button>
+        <button id="editBtn" onclick="editArticle()" class="btn edit-btn">수정</button>
         <button id="deleteBtn" onclick="deleteArticle()" class="btn delete-btn">삭제</button>
     </div>
 </div>

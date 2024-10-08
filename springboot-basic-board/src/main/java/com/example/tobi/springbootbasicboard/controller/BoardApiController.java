@@ -69,6 +69,17 @@ public class BoardApiController {
         return ResponseEntity.ok().build();
     }
 
+    @PutMapping
+    public ResponseEntity<Void> updateArticle(
+            @RequestParam("title") String title,
+            @RequestParam("hiddenId") Long id,
+            @RequestParam("content") String content,
+            @RequestPart("file") MultipartFile file
+    ) {
+//        boardService.updateArticle(id, title, content, file);
+        return ResponseEntity.ok().build();
+    }
+
     @GetMapping("/file/download/{fileName}")
     public ResponseEntity<Resource> downloadFile(@PathVariable String fileName) throws UnsupportedEncodingException {
         Resource resource = boardService.downloadFile(fileName);
@@ -91,5 +102,4 @@ public class BoardApiController {
         boardService.deleteArticle(id, request);
         return ResponseEntity.ok("게시글이 성공적으로 삭제되었습니다.");
     }
-
 }

@@ -4,6 +4,11 @@ $(document).ready(() => {
     loadBoardDetail();
 });
 
+let editArticle = () => {
+    let resourceId = $('#hiddenId').val();
+    window.location.href = "/update/" + resourceId;
+}
+
 let deleteArticle = () => {
 
     let resourceId = $('#hiddenId').val();

@@ -3,3 +3,8 @@ server:
 
 feign-data:
   url: "http://localhost:8083"
+
+weather:
+  api:
+    url: "http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtNcst"
+    key:

@@ -74,9 +74,11 @@ public class BoardApiController {
             @RequestParam("title") String title,
             @RequestParam("hiddenId") Long id,
             @RequestParam("content") String content,
+            @RequestParam("hiddenFileFlag") Boolean fileFlag,
+            @RequestParam("hiddenFilePath") String filePath,
             @RequestPart("file") MultipartFile file
     ) {
-//        boardService.updateArticle(id, title, content, file);
+        boardService.updateArticle(id, title, content, fileFlag, filePath, file);
         return ResponseEntity.ok().build();
     }
 

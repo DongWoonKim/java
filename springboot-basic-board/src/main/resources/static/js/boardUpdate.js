@@ -4,7 +4,7 @@ $(document).ready(() => {
     checkSession();
     loadBoardDetail();
     updated();
-    fileChaged();
+    fileChanged();
     $('#hiddenFileFlag').val(false);
 });
 
@@ -37,7 +37,7 @@ let updated = () => {
     });
 }
 
-let fileChaged = () => {
+let fileChanged = () => {
     // 파일 선택 시 이벤트
     $('#file').on('change', function(e) {
         const file = e.target.files[0]; // 첫 번째 파일만 선택
@@ -63,6 +63,7 @@ let updateFileList = () => {
         $('.remove-btn').on('click', function () {
             selectedFile = null; // 선택된 파일 제거
             $('#file').val(''); // 파일 input 초기화
+            $('#hiddenFileFlag').val(true);
             updateFileList(); // 파일 목록 갱신
         });
     }
@@ -91,11 +92,20 @@ let loadBoardDetail = () => {
                 let filePath = response.filePath;
                 $('#hiddenFilePath').val(filePath)
                 let fileName = filePath.substring(filePath.lastIndexOf('\\') + 1); // 파일명 추출
-                let fileElement = `
+                let fileElement = ` 
                             <li>
-                                <a href="/api/board/file/download/${fileName}">${fileName}</a> <!-- 다운로드 링크 -->
-                            </li>`;
+                                ${fileName} <button type="button" class="remove-btn">X</button>
+                            </li>`
+                ;
                 $('#fileList').append(fileElement);
+
+                // X 버튼 클릭 시 파일 제거
+                $('.remove-btn').on('click', function () {
+                    selectedFile = null; // 선택된 파일 제거
+                    $('#hiddenFileFlag').val(true);
+                    $('#file').val(''); // 파일 input 초기화
+                    updateFileList(); // 파일 목록 갱신
+                });
             } else {
                 $('#fileList').append('<li>첨부된 파일이 없습니다.</li>');
             }

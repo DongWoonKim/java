@@ -62,4 +62,27 @@ public class BoardService {
         boardMapper.deleteBoardById(id);
         fileService.deleteFile(request.getFilePath());
     }
+
+    public void updateArticle(Long id, String title, String content, Boolean fileFlag, String filePath, MultipartFile file) {
+        // fileFlag == false or true
+        System.out.println("flag :: " + fileFlag);
+        String path = null;
+        if (fileFlag) {
+            fileService.deleteFile(filePath);
+            if (!file.isEmpty()) {
+                path = fileService.fileUpload(file);
+            }
+        } else {
+            path = filePath;
+        }
+
+        boardMapper.updateArticle(
+                Board.builder()
+                        .id(id)
+                        .title(title)
+                        .content(content)
+                        .filePath(path)
+                        .build()
+        );
+    }
 }

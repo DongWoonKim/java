@@ -1,11 +1,9 @@
 package com.example.spring.springbootfeigndata.controller;
 
+import com.example.spring.springbootfeigndata.dto.DataRequest;
 import com.example.spring.springbootfeigndata.dto.DataResponse;
 import jakarta.annotation.PostConstruct;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -34,6 +32,44 @@ public class DataController {
         }
 
         return dataResponse;
+    }
+
+    @PostMapping
+    public DataResponse createData(@RequestBody DataRequest dataRequest) {
+        DataResponse newData = DataResponse.builder()
+                .id(idCounter)
+                .name(dataRequest.getName())
+                .value(dataRequest.getValue())
+                .build();
+
+        dataStore.put(idCounter, newData);
+        idCounter++;
+
+        return newData;
+    }
+
+    @PutMapping("/{id}")
+    public DataResponse updateDate(@PathVariable("id") Long id, @RequestBody DataRequest dataRequest) {
+        DataResponse dataResponse = dataStore.get(id);
+        if (dataResponse == null) {
+            throw new RuntimeException("Data not found with ID : " + id);
+        }
+
+        dataResponse.setName(dataRequest.getName());
+        dataResponse.setValue(dataRequest.getValue());
+        dataStore.put(id, dataResponse);
+
+        return dataResponse;
+    }
+
+    @DeleteMapping("/{id}")
+    public String deleteData(@PathVariable("id") Long id) {
+        DataResponse removed = dataStore.remove(id);
+        if (removed == null) {
+            throw new RuntimeException("Data not found with ID : " + id);
+        }
+
+        return "Data with ID " + id + " deleted successfully";
     }
 
 }

@@ -17,14 +17,14 @@ public class UserDetailService implements UserDetailsService {
 
     @Override
     public CustomUserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Member member = memberMapper.signIn(username);
 
+        Member member = memberMapper.signIn(username);
         if (member == null) {
-            throw new UsernameNotFoundException("username not found");
+            throw new UsernameNotFoundException(username + " not found");
         }
 
         return CustomUserDetails.builder()
                 .member(member)
-                .build(); // Member 정보를 가진 CustomUserDetails 반환
+                .build();
     }
 }

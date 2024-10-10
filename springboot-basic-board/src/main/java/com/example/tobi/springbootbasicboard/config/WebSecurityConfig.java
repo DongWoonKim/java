@@ -1,5 +1,6 @@
 package com.example.tobi.springbootbasicboard.config;
 
+import com.example.tobi.springbootbasicboard.config.security.CustomAuthenticationSuccessHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -21,7 +22,10 @@ public class WebSecurityConfig {
     }
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain filterChain(
+            HttpSecurity http,
+            CustomAuthenticationSuccessHandler successHandler
+    ) throws Exception {
         http
                 .authorizeHttpRequests(
                         auth -> auth
@@ -36,7 +40,8 @@ public class WebSecurityConfig {
                         form -> form
                                 .loginPage("/member/login")
                                 .loginProcessingUrl("/login")
-                                .defaultSuccessUrl("/")
+                                .successHandler(successHandler)
+
                 )
                 .logout(
                         logout -> logout

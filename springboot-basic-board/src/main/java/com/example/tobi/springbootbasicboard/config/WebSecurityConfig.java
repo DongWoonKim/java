@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
@@ -32,7 +33,9 @@ public class WebSecurityConfig {
                                 .anyRequest().authenticated()
                 )
                 .formLogin(
-                        form -> form.loginPage("/member/login")
+                        form -> form
+                                .loginPage("/member/login")
+                                .loginProcessingUrl("/login")
                                 .defaultSuccessUrl("/")
                 )
                 .logout(
@@ -43,6 +46,11 @@ public class WebSecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable);
 
         return http.build();
+    }
+
+    @Bean
+    public BCryptPasswordEncoder bCryptPasswordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 
 }

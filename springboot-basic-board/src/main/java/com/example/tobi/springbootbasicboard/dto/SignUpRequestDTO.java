@@ -2,7 +2,7 @@ package com.example.tobi.springbootbasicboard.dto;
 
 import com.example.tobi.springbootbasicboard.model.Member;
 import lombok.Getter;
-import lombok.ToString;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Getter
 public class SignUpRequestDTO {
@@ -10,10 +10,10 @@ public class SignUpRequestDTO {
     private String password;
     private String userName;
 
-    public Member toMember() {
+    public Member toMember(BCryptPasswordEncoder bCryptPasswordEncoder) {
         return Member.builder()
                 .userId(userId)
-                .password(password)
+                .password(bCryptPasswordEncoder.encode(password))
                 .userName(userName)
                 .build();
     }

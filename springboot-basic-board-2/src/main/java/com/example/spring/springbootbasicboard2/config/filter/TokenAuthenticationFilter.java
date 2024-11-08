@@ -25,10 +25,21 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
         // 검증 로직
         String requestURI = request.getRequestURI();
         log.info("requestURI: {}", requestURI);
-        
 
-        chain.doFilter(request, response);
+        String token = resolveToken(request);
 
+        if (token == null) {
+            response.sendError(HttpServletResponse.SC_FORBIDDEN);
+        }
+
+        if (tokenProvider.validateToken(token) == 1) {
+            // 인증정보설정 로직...
+            chain.doFilter(request, response);
+        } else if (tokenProvider.validateToken(token) == 2) {
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+        } else {
+            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+        }
     }
     
     private String resolveToken(HttpServletRequest request) {

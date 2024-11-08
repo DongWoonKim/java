@@ -12,3 +12,7 @@ spring:
 
 mybatis:
   mapper-locations: classpath:mappers/*.xml
+
+jwt:
+  issuer: test@naver.com
+  secret_key: 1CUkGbcRHun/pzZ7iX5GLk4AswnEZor6gz1bu9tkfL7bh7x9O40g34qgkdOoct3CyQLh8Rb0nQ5oVKhv2/Ojvw==

@@ -12,11 +12,12 @@
 <body>
 
 <div class="container">
-    <h1 th:text="|${userName}님 환영합니다.|"></h1>
-    <input id="hiddenUserId" type="hidden" th:value="${userId}">
-    <input type="hidden" th:value="${userName}">
+    <h1 id="welcome-message"></h1>
+    <input id="hiddenUserId" type="hidden">
+    <input id="hiddenUserName" type="hidden">
+
     <a th:href="@{/write}" class="btn">글쓰기</a>
-    <a th:href="@{/logout}" class="btn logout-btn logout-btn-position">로그아웃</a>
+    <button onclick="logout();" class="btn logout-btn logout-btn-position">로그아웃</button>
     <!-- 게시판 영역 -->
     <div id="board">
         <table>

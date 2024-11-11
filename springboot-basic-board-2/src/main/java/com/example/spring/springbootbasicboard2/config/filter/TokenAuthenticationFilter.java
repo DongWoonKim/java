@@ -39,11 +39,8 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
 
         String token = resolveToken(request);
 
-        if (token == null) {
-            response.sendError(HttpServletResponse.SC_FORBIDDEN);
-        }
-
         int validateToken = tokenProvider.validateToken(token);
+        log.info("validateToken: {}", validateToken);
         if (validateToken == 1) {
             // 인증정보설정 로직...
             Authentication authentication = tokenProvider.getAuthentication(token);
@@ -52,13 +49,13 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
             Member member = tokenProvider.getTokenDetails(token);
             request.setAttribute("member", member);
 
-            chain.doFilter(request, response);
         } else if (validateToken == 2) {
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-        } else {
+        } else if (validateToken == 3) {
             response.setStatus(HttpServletResponse.SC_FORBIDDEN);
         }
 
+        chain.doFilter(request, response);
     }
     
     private String resolveToken(HttpServletRequest request) {

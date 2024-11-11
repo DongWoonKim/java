@@ -1,5 +1,7 @@
 package com.example.spring.springbootbasicboard2.service;
 
+import com.example.spring.springbootbasicboard2.config.jwt.TokenProvider;
+import com.example.spring.springbootbasicboard2.config.security.CustomUserDetails;
 import com.example.spring.springbootbasicboard2.dto.SignInResponseDTO;
 import com.example.spring.springbootbasicboard2.mapper.MemberMapper;
 import com.example.spring.springbootbasicboard2.model.Member;
@@ -8,7 +10,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+
+import java.time.Duration;
 
 @Service
 @RequiredArgsConstructor
@@ -16,15 +21,27 @@ public class MemberService {
 
     private final MemberMapper memberMapper;
     private final AuthenticationManager authenticationManager;
+    private final TokenProvider tokenProvider;
 
     public void signUp(Member member) {
         memberMapper.signUp(member);
     }
 
     public SignInResponseDTO signIn(String username, String password) {
-        Authentication authenticate = authenticationManager.authenticate(
+        Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(username, password)
         );
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+
+        Member member = ((CustomUserDetails) authentication.getPrincipal()).getMember();
+
+        // Access Token
+        String accessToken = tokenProvider.generateToken(member, Duration.ofHours(2));
+
+        // Refresh Token
+        String refreshToken = tokenProvider.generateToken(member, Duration.ofDays(2));
+
+        // 
 
         return null;
     }

@@ -16,10 +16,12 @@
         VALUES (#{userId}, #{password}, #{userName});
     </insert>
 
-    <select id="signIn"
+    <select id="findByUserId"
             parameterType="String"
             resultMap="memberResultMap">
-        SELECT * FROM member WHERE user_id = #{userId};
+        SELECT
+            id, user_id, password, user_name, role
+        FROM member WHERE user_id = #{userId};
     </select>
 
 </mapper>

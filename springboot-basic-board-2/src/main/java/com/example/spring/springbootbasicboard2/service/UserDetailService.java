@@ -19,7 +19,7 @@ public class UserDetailService implements UserDetailsService {
     @Override
     public CustomUserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-        Member member = memberMapper.signIn(username);
+        Member member = memberMapper.findByUserId(username);
         if (member == null) {
             throw new UsernameNotFoundException(username + " not found");
         }

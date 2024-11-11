@@ -20,6 +20,7 @@ public class UserDetailService implements UserDetailsService {
     public CustomUserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
         Member member = memberMapper.findByUserId(username);
+        System.out.println("CustomUserDetails " + member);
         if (member == null) {
             throw new UsernameNotFoundException(username + " not found");
         }

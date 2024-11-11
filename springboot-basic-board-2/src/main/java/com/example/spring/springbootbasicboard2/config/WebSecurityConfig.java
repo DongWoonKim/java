@@ -43,7 +43,8 @@ public class WebSecurityConfig {
                                         new AntPathRequestMatcher("/member/login"),
                                         new AntPathRequestMatcher("/member/join"),
                                         new AntPathRequestMatcher("/join"),
-                                        new AntPathRequestMatcher("/login")
+                                        new AntPathRequestMatcher("/login"),
+                                        new AntPathRequestMatcher("/")
                                 ).permitAll()
                                 .anyRequest().authenticated()
                 )

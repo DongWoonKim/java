@@ -5,6 +5,7 @@ import com.example.spring.springbootbasicboard2.config.security.CustomUserDetail
 import com.example.spring.springbootbasicboard2.dto.SignInResponseDTO;
 import com.example.spring.springbootbasicboard2.mapper.MemberMapper;
 import com.example.spring.springbootbasicboard2.model.Member;
+import com.example.spring.springbootbasicboard2.util.CookieUtil;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -41,10 +42,15 @@ public class MemberService {
         // Refresh Token
         String refreshToken = tokenProvider.generateToken(member, Duration.ofDays(2));
 
-        //
-
-
-        return null;
+        return SignInResponseDTO.builder()
+                .isLoggedIn(true)
+                .message("로그인 성공")
+                .url("/")
+                .accessToken(accessToken)
+                .refreshToken(refreshToken)
+                .userId(member.getUserId())
+                .userName(member.getUserName())
+                .build();
     }
 
 

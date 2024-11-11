@@ -8,6 +8,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class UserDetailService implements UserDetailsService {
@@ -24,6 +26,9 @@ public class UserDetailService implements UserDetailsService {
 
         return CustomUserDetails.builder()
                 .member(member)
+                .roles(
+                        List.of(String.valueOf(member.getRole()))
+                )
                 .build();
     }
 }

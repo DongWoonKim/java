@@ -4,9 +4,11 @@
 <mapper namespace="com.example.spring.springbootbasicboard2.mapper.MemberMapper">
 
     <resultMap id="memberResultMap" type="com.example.spring.springbootbasicboard2.model.Member">
+        <result property="id" column="id"/>
         <result property="userId" column="user_id"/>
         <result property="password" column="password"/>
         <result property="userName" column="user_name"/>
+        <result property="role" column="role"/>
     </resultMap>
 
     <insert id="signUp" parameterType="com.example.spring.springbootbasicboard2.model.Member">

@@ -1,5 +1,6 @@
 package com.example.spring.springbootbasicboard2.config.jwt;
 
+import com.example.spring.springbootbasicboard2.enums.Role;
 import com.example.spring.springbootbasicboard2.model.Member;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
@@ -68,6 +69,16 @@ public class TokenProvider {
             log.info("Token is not valid");
             return 3;
         }
+    }
+
+    public Member getTokenDetails(String token) {
+        Claims claims = getClaims(token);
+        return Member.builder()
+                .id(claims.get("id", Long.class))
+                .userId(claims.getSubject())
+                .userName(claims.get("userName", String.class))
+                .role(Role.valueOf( claims.get("role", String.class) ))
+                .build();
     }
     
     // 토큰 기반으로 인증 정보를 가져오는 메서드

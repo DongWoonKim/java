@@ -5,6 +5,9 @@ import com.example.spring.springbootbasicboard2.mapper.MemberMapper;
 import com.example.spring.springbootbasicboard2.model.Member;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -12,26 +15,18 @@ import org.springframework.stereotype.Service;
 public class MemberService {
 
     private final MemberMapper memberMapper;
+    private final AuthenticationManager authenticationManager;
 
     public void signUp(Member member) {
         memberMapper.signUp(member);
     }
 
-    public SignInResponseDTO signIn(Member member, HttpSession session) {
-        Member getMember = memberMapper.signIn(member.getUserId());
-        if (getMember == null) {
-            return makeSignInRequestDTO(false, "존재하지 않는 회원입니다.", null, null);
-        }
+    public SignInResponseDTO signIn(String username, String password) {
+        Authentication authenticate = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(username, password)
+        );
 
-        if ( !member.getPassword().equals(getMember.getPassword()) ) {
-            return makeSignInRequestDTO(false, "비밀번호가 틀렸습니다.", null, null);
-        }
-        
-        // 세션 설정
-        session.setAttribute("userId", getMember.getUserId());
-        session.setAttribute("userName", getMember.getUserName());
-
-        return makeSignInRequestDTO(true, "로그인이 성공했습니다.", "/", member);
+        return null;
     }
 
 

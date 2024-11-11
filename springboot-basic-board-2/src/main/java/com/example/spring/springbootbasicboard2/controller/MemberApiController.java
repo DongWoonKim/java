@@ -1,5 +1,7 @@
 package com.example.spring.springbootbasicboard2.controller;
 
+import com.example.spring.springbootbasicboard2.dto.SignInRequestDTO;
+import com.example.spring.springbootbasicboard2.dto.SignInResponseDTO;
 import com.example.spring.springbootbasicboard2.dto.SignUpRequestDTO;
 import com.example.spring.springbootbasicboard2.dto.SignUpResponseDTO;
 import com.example.spring.springbootbasicboard2.service.MemberService;
@@ -27,11 +29,10 @@ public class MemberApiController {
         );
     }
 
-//    @PostMapping("/login")
-//    public ResponseEntity<SignInResponseDTO> signIn(@RequestBody SignInRequestDTO signInRequestDTO, HttpSession session) {
-//        return ResponseEntity.ok(
-//                memberService.signIn(signInRequestDTO.toMember(), session)
-//        );
-//    }
+    @PostMapping("/login")
+    public ResponseEntity<SignInResponseDTO> signIn(@RequestBody SignInRequestDTO signInRequestDTO) {
+
+        return null;
+    }
 
 }

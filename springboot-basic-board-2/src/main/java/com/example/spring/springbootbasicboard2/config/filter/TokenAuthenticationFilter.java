@@ -1,6 +1,7 @@
 package com.example.spring.springbootbasicboard2.config.filter;
 
 import com.example.spring.springbootbasicboard2.config.jwt.TokenProvider;
+import com.example.spring.springbootbasicboard2.model.Member;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -27,6 +28,14 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
         // 검증 로직
         String requestURI = request.getRequestURI();
         log.info("requestURI: {}", requestURI);
+        if (
+                "/member/login".equals(requestURI)
+                || "/js/signIn.js".equals(requestURI)
+                || "/css/signIn.css".equals(requestURI)
+        ) {
+            chain.doFilter(request, response);
+            return;
+        }
 
         String token = resolveToken(request);
 
@@ -39,6 +48,9 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
             // 인증정보설정 로직...
             Authentication authentication = tokenProvider.getAuthentication(token);
             SecurityContextHolder.getContext().setAuthentication(authentication);
+
+            Member member = tokenProvider.getTokenDetails(token);
+            request.setAttribute("member", member);
 
             chain.doFilter(request, response);
         } else if (validateToken == 2) {

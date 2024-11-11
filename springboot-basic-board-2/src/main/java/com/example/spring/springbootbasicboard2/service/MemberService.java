@@ -41,7 +41,8 @@ public class MemberService {
         // Refresh Token
         String refreshToken = tokenProvider.generateToken(member, Duration.ofDays(2));
 
-        // 
+        //
+
 
         return null;
     }

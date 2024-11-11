@@ -8,6 +8,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -32,14 +34,19 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
             response.sendError(HttpServletResponse.SC_FORBIDDEN);
         }
 
-        if (tokenProvider.validateToken(token) == 1) {
+        int validateToken = tokenProvider.validateToken(token);
+        if (validateToken == 1) {
             // 인증정보설정 로직...
+            Authentication authentication = tokenProvider.getAuthentication(token);
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+
             chain.doFilter(request, response);
-        } else if (tokenProvider.validateToken(token) == 2) {
+        } else if (validateToken == 2) {
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         } else {
             response.setStatus(HttpServletResponse.SC_FORBIDDEN);
         }
+
     }
     
     private String resolveToken(HttpServletRequest request) {

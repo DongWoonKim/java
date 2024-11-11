@@ -1,19 +1,22 @@
 package com.example.spring.springbootbasicboard2.config.jwt;
 
 import com.example.spring.springbootbasicboard2.model.Member;
-import io.jsonwebtoken.ExpiredJwtException;
-import io.jsonwebtoken.Header;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 
 import javax.crypto.SecretKey;
 import java.time.Duration;
 import java.util.Base64;
+import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 
 @Slf4j
 @Service
@@ -65,6 +68,29 @@ public class TokenProvider {
             log.info("Token is not valid");
             return 3;
         }
+    }
+    
+    // 토큰 기반으로 인증 정보를 가져오는 메서드
+    public Authentication getAuthentication(String token) {
+        Claims claims = getClaims(token);
+        
+        // Claims에서 역할을 추출하고, GrantedAuthority로 변환
+        List<SimpleGrantedAuthority> authorities = Collections.singletonList(
+                new SimpleGrantedAuthority(String.valueOf(claims.get("role")))
+        );
+
+        // UserDetails 객체 생성
+        User user = new User(claims.getSubject(), "", authorities);
+
+        return new UsernamePasswordAuthenticationToken(user, token, authorities);
+    }
+
+    private Claims getClaims(String token) {
+        return Jwts.parserBuilder()
+                .setSigningKey(getSecretKey())
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
     }
 
     private SecretKey getSecretKey() {

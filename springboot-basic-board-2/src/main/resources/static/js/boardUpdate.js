@@ -1,8 +1,17 @@
 let selectedFile = null; // 파일은 1개만 선택 가능
 
 $(document).ready(() => {
-    checkSession();
-    loadBoardDetail();
+    checkToken();
+    setupAjax();
+
+    getUserInfo().then((userInfo) => {
+        $('#hiddenUserId').val(userInfo.userId);
+        $('#hiddenUserName').val(userInfo.userName);
+        loadBoardDetail();
+    }).catch((error) => {
+        console.log('Error while fetching user info : ', error);
+    });
+
     updated();
     fileChanged();
     $('#hiddenFileFlag').val(false);
@@ -69,13 +78,6 @@ let updateFileList = () => {
     }
 }
 
-let checkSession = () => {
-    let hUserId = $('#hiddenUserId').val();
-
-    if (hUserId == null || hUserId === '')
-        window.location.href = "/member/login";
-}
-
 let loadBoardDetail = () => {
 
     let hId = $('#hiddenId').val();
@@ -85,7 +87,7 @@ let loadBoardDetail = () => {
         success: (response) => {
             $('#title').val(response.title);
             $('#content').text(response.content);
-            $('#userId').text(response.userId);
+            $('#userId').val(response.userId);
 
             // 파일 목록이 있는 경우, 파일 다운로드 링크 추가
             if (response.filePath && response.filePath.length > 0) {

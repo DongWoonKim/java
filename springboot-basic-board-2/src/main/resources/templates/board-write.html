@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://code.jquery.com/jquery-3.7.1.js" crossorigin="anonymous"></script>
+    <script th:src="@{/js/common.js}"></script>
     <script th:src="@{/js/boardWrite.js}"></script>
     <link th:href="@{/css/boardWrite.css}" rel="stylesheet">
     <title>글쓰기</title>
@@ -13,8 +14,8 @@
     <h1>글쓰기</h1>
 
     <form id="writeForm" enctype="multipart/form-data">
-        <input id="hiddenUserId" name="hiddenUserId" type="hidden" th:value="${userId}">
-        <input id="hiddenUserName" name="hiddenUserName" type="hidden" th:value="${userName}">
+        <input id="hiddenUserId" name="hiddenUserId" type="hidden">
+        <input id="hiddenUserName" name="hiddenUserName" type="hidden">
 
         <div class="form-group">
             <label for="title">제목</label>
@@ -23,7 +24,7 @@
 
         <div class="form-group">
             <label for="userId">작성자</label>
-            <input type="text" id="userId" name="userId" th:value="${userName}" required disabled>
+            <input type="text" id="userId" name="userId" required disabled>
         </div>
 
         <div class="form-group">

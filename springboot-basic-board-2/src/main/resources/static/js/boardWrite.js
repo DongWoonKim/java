@@ -1,7 +1,17 @@
 let selectedFile = null; // 파일은 1개만 선택 가능
 
 $(document).ready(() => {
-    checkSession();
+    checkToken();
+    setupAjax();
+
+    getUserInfo().then((userInfo) => {
+        $('#hiddenUserId').val(userInfo.userId);
+        $('#hiddenUserName').val(userInfo.userName);
+        $('#userId').val(userInfo.userName + '(' +userInfo.userId + ')');
+    }).catch((error) => {
+        console.log('Error while fetching user info : ', error);
+    })
+
     saved();
     fileChaged();
 });
@@ -62,11 +72,4 @@ let updateFileList = () => {
             updateFileList(); // 파일 목록 갱신
         });
     }
-}
-
-let checkSession = () => {
-    let hUserId = $('#hiddenUserId').val();
-
-    if (hUserId == null || hUserId === '')
-        window.location.href = "/member/login";
 }

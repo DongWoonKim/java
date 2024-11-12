@@ -18,36 +18,23 @@ public class BoardController {
     @GetMapping("/detail")
     public String detail(
             @RequestParam("id") Long id,
-            HttpSession session,
             Model model
     ) {
-        setSession(session, model);
         model.addAttribute("id", id);
         return "board-detail";
     }
 
     @GetMapping("/write")
-    public String write(HttpSession session, Model model) {
-        setSession(session, model);
+    public String write() {
         return "board-write";
     }
 
     @GetMapping("/update/{id}")
     public String update(
             @PathVariable Long id,
-            HttpSession session,
             Model model) {
-        setSession(session, model);
         model.addAttribute("id", id);
         return "board-update";
-    }
-
-    private void setSession(HttpSession session, Model model) {
-        String userId = (String) session.getAttribute("userId");
-        String userName = (String) session.getAttribute("userName");
-
-        model.addAttribute("userName", userName);
-        model.addAttribute("userId", userId);
     }
 
 }

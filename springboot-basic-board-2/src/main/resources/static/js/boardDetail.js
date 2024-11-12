@@ -1,7 +1,15 @@
 
 $(document).ready(() => {
-    checkSession();
-    loadBoardDetail();
+    checkToken();
+    setupAjax();
+    getUserInfo().then((userInfo) => {
+        $('#hiddenUserId').val(userInfo.userId);
+        $('#hiddenUserName').val(userInfo.userName);
+        // $('#userId').val(userInfo.userName + '(' +userInfo.userId + ')');
+        loadBoardDetail();
+    }).catch((error) => {
+        console.log('Error while fetching user info : ', error);
+    })
 });
 
 let editArticle = () => {
@@ -30,13 +38,6 @@ let deleteArticle = () => {
     });
 }
 
-let checkSession = () => {
-    let hUserId = $('#hiddenUserId').val();
-
-    if (hUserId == null || hUserId === '')
-        window.location.href = "/member/login";
-}
-
 let loadBoardDetail = () => {
 
     let hId = $('#hiddenId').val();
@@ -45,6 +46,8 @@ let loadBoardDetail = () => {
         type: 'GET',
         url: '/api/board/' + hId,
         success: (response) => {
+            console.log('/api/board/ ', response.userId)
+            console.log('/api/board/ ', hUserId)
             $('#title').text(response.title);
             $('#content').text(response.content);
             $('#userId').text(response.userId);

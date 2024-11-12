@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://code.jquery.com/jquery-3.7.1.js" crossorigin="anonymous"></script>
+    <script th:src="@{/js/common.js}"></script>
     <script th:src="@{/js/boardUpdate.js}"></script>
     <link th:href="@{/css/boardUpdate.css}" rel="stylesheet">
     <title>글수정</title>
@@ -14,8 +15,8 @@
 
     <form id="writeForm" enctype="multipart/form-data">
         <input id="hiddenId" name="hiddenId" type="hidden" th:value="${id}">
-        <input id="hiddenUserId" name="hiddenUserId" type="hidden" th:value="${userId}">
-        <input id="hiddenUserName" name="hiddenUserName" type="hidden" th:value="${userName}">
+        <input id="hiddenUserId" name="hiddenUserId" type="hidden">
+        <input id="hiddenUserName" name="hiddenUserName" type="hidden">
         <input id="hiddenFilePath" name="hiddenFilePath" type="hidden">
         <input id="hiddenFileFlag" name="hiddenFileFlag" type="hidden">
 
@@ -26,7 +27,7 @@
 
         <div class="form-group">
             <label for="userId">작성자</label>
-            <input type="text" id="userId" name="userId" th:value="${userName}" required disabled>
+            <input type="text" id="userId" name="userId" required disabled>
         </div>
 
         <div class="form-group">

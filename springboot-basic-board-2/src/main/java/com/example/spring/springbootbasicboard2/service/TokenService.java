@@ -1,6 +1,7 @@
 package com.example.spring.springbootbasicboard2.service;
 
 import com.example.spring.springbootbasicboard2.config.jwt.TokenProvider;
+import com.example.spring.springbootbasicboard2.dto.RefreshTokenResponseDTO;
 import com.example.spring.springbootbasicboard2.model.Member;
 import jakarta.servlet.http.Cookie;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +15,7 @@ public class TokenService {
 
     private final TokenProvider tokenProvider;
 
-    public void refreshToken(Cookie[] cookies) {
+    public RefreshTokenResponseDTO refreshToken(Cookie[] cookies) {
         String refreshToken = getRefreshTokenFromCookies(cookies);
 
         if (refreshToken != null && tokenProvider.validateToken(refreshToken) == 1) {
@@ -27,11 +28,16 @@ public class TokenService {
             // Refresh Token
             String newRefreshToken = tokenProvider.generateToken(member, Duration.ofDays(2));
 
-
-        } else {
-
+            return RefreshTokenResponseDTO.builder()
+                    .validated(true)
+                    .accessToken(newAccessToken)
+                    .refreshToken(newRefreshToken)
+                    .build();
         }
 
+        return RefreshTokenResponseDTO.builder()
+                .validated(false)
+                .build();
     }
 
     private String getRefreshTokenFromCookies(Cookie[] cookies) {

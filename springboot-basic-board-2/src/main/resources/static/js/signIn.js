@@ -22,15 +22,13 @@ $(document).ready(() => {
                 if (response.loggedIn) {
                     alert(response.message);
                     localStorage.setItem('accessToken', response.accessToken);
-                //     // 성공 후 다른 페이지로 이동하거나 처리할 코드 작성 가능
+                    // 성공 후 다른 페이지로 이동하거나 처리할 코드 작성 가능
                     window.location.href = response.url;
                 }
             },
             error: (error) => {
                 // 실패 시 실행될 콜백 함수
                 console.error('오류 발생:', error);
-                // alert(error.responseJSON.message);
-                // window.location.href = error.responseJSON.url;
             }
         });
 

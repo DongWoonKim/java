@@ -22,8 +22,9 @@ let handleTokenExpiration = () => {
             console.log('response :: ', response);
             localStorage.setItem('accessToken', response.accessToken);
         },
-        error: (error) => {
+        error: () => {
             alert('로그인이 필요합니다. 다시 로그인해주세요.');
+            localStorage.removeItem('accessToken');
             window.location.href = '/member/login';
         }
     });

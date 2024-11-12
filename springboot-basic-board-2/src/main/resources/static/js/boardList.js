@@ -80,9 +80,13 @@ let loadBoard = (page, size) => {
             $('#prevPage').prop('disabled', page === 1);
             $('#nextPage').prop('disabled', response.last);
         },
-        error: function (error) {
-            console.error('오류 발생:', error);
-            alert('게시판 데이터를 불러오는데 오류가 발생했습니다.');
+        error: function (xhr, error) {
+            if (xhr.status === 401) {
+                handleTokenExpiration();
+            } else {
+                console.error('오류 발생:', error);
+                alert('게시판 데이터를 불러오는데 오류가 발생했습니다.');
+            }
         }
     });
 }

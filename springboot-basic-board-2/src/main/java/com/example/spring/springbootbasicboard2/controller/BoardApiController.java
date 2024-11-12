@@ -10,6 +10,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -25,6 +26,7 @@ public class BoardApiController {
 
     private final BoardService boardService;
 
+    @PreAuthorize("hasRole('ROLE_USER')")
     @GetMapping
     public BoardListResponseDTO getBoardList(
             @RequestParam(defaultValue = "1") int page,

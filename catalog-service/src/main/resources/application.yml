@@ -20,10 +20,11 @@ spring:
         initial-interval: 1000
         max-interval: 2000
         multiplier: 1.1
+      enabled: false
   config:
     import: "optional:configserver:"
   datasource:
-    url: jdbc:mysql://localhost:3307/catalog?useSSL=false&serverTimezone=UTC&characterEncoding=UTF-8
+    url: jdbc:mysql://localhost:3307/catalog?useSSL=false&serverTimezone=UTC&characterEncoding=UTF-8&allowPublicKeyRetrieval=true
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: user
     password: 1234
@@ -35,6 +36,10 @@ management:
     web:
       exposure:
         include: refresh
+gradle:
+  jvmArgs: "-Xmx6g -Xms2g -XX:+HeapDumpOnOutOfMemoryError"
+  daemon: false
+  parallel: false
 
 polar:
   greeting: Welcome to the local book catalog!

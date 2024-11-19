@@ -9,7 +9,7 @@ version = '0.0.1-SNAPSHOT'
 
 java {
     toolchain {
-        languageVersion = JavaLanguageVersion.of(21)
+        languageVersion = JavaLanguageVersion.of(17)
     }
 }
 
@@ -29,11 +29,11 @@ ext {
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation 'org.springframework.boot:spring-boot-starter-validation:3.3.5'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.cloud:spring-cloud-starter-config'
     implementation 'org.springframework.retry:spring-retry:2.0.10'
-    implementation 'org.springframework.boot:spring-boot-starter-actuator:3.3.5'
-    implementation 'org.springframework.boot:spring-boot-starter-data-jdbc:3.3.5'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
     implementation 'com.mysql:mysql-connector-j:8.4.0'
     implementation 'org.flywaydb:flyway-mysql'
 
@@ -56,6 +56,18 @@ dependencyManagement {
     }
 }
 
+bootBuildImage {
+    imageName = "${project.name}"
+    environment = ["BP_JVM_VERSION": "17",  "TMPDIR": "/tmp"]
+
+    docker {
+        publishRegistry {
+            username = project.findProperty("registryUsername")
+            password = project.findProperty("registryToken")
+            url = project.findProperty("registryUrl")
+        }
+    }
+}
 
 tasks.named('test') {
     useJUnitPlatform()

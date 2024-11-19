@@ -8,6 +8,8 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 @RequiredArgsConstructor
 @Profile("testdata")
@@ -17,6 +19,7 @@ public class BookDataLoader {
 
     @EventListener(ApplicationReadyEvent.class)
     public void loadBookTestData() {
+        bookRepository.deleteAll();
         Book build = Book.builder()
                 .isbn("1234567891")
                 .title("test")
@@ -31,8 +34,7 @@ public class BookDataLoader {
                 .price(9.2)
                 .build();
 
-        bookRepository.save(build);
-        bookRepository.save(build2);
+        bookRepository.saveAll(List.of(build, build2));
     }
 
 }

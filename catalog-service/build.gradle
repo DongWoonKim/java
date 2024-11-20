@@ -9,7 +9,7 @@ version = '0.0.1-SNAPSHOT'
 
 java {
     toolchain {
-        languageVersion = JavaLanguageVersion.of(17)
+        languageVersion = JavaLanguageVersion.of(21)
     }
 }
 
@@ -55,15 +55,6 @@ dependencyManagement {
         mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
     }
 }
-bootBuildImage {
-    environment = [
-            "JAVA_TOOL_OPTIONS": "-Djava.io.tmpdir=C:\\Users\\cheoho-hi\\Desktop\\tmp"
-    ]
-    buildpacks = [
-            "gcr.io/paketo-buildpacks/java"
-    ]
-}
-
 
 tasks.named('test') {
     useJUnitPlatform()

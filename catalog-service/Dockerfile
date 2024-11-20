@@ -1,5 +1,6 @@
 # 첫 번째 스테이지: 빌드 스테이지
-FROM gradle:jdk21-graal-jammy AS builder
+#FROM gradle:jdk21-graal-jammy AS builder
+FROM gradle:7.6.1-jdk17-jammy AS builder
 # 작업 디렉토리 설정
 WORKDIR /workspace
 

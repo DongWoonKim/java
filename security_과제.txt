@@ -1,0 +1,21 @@
+[~목욜까지 그후 금욜 발표]
+- 제출 : 목욜 자정 (인증/인가 플로우)
+1. 프로젝트 새로 만들것
+springboot-security-[name]
+
+2. 로그인/회원가입.
+* user id
+* pw
+* role
+
+3. 인증 구현
+- 토큰방식
+- access-token
+- refresh-token
+- 예외처리
+
+성공하면 간단한 main페이지로 이동할 것.
+
+4. 인가 구현
+
+

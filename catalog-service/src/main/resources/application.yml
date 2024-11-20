@@ -6,9 +6,12 @@ server:
     threads:
       max: 50
       min-spare: 5
+  shutdown: graceful
 spring:
   application:
     name: catalog-service
+  lifecycle:
+    timeout-per-shutdown-phase: 15s
   cloud:
     config:
       uri: ${SPRING_CLOUD_CONFIG_URI:http://localhost:8888}

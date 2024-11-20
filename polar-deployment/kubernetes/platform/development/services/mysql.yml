@@ -1,0 +1,74 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: polar-mysql
+  labels:
+    db: polar-mysql
+spec:
+  selector:
+    matchLabels:
+      db: polar-mysql
+  template:
+    metadata:
+      labels:
+        db: polar-mysql
+    spec:
+      containers:
+        - name: polar-mysql
+          image: mysql:latest
+          env:
+            - name: MYSQL_USER
+              value: user
+            - name: MYSQL_PASSWORD
+              value: "1234"
+            - name: MYSQL_DATABASE
+              value: catalog
+            - name: MYSQL_ROOT_PASSWORD
+              value: "1234"
+          resources:
+            requests:
+              cpu: "250m"
+              memory: "512Mi"
+            limits:
+              cpu: "500m"
+              memory: "1Gi"
+          volumeMounts:
+            - name: initdb-script
+              mountPath: /docker-entrypoint-initdb.d
+      volumes:
+        - name: initdb-script
+          configMap:
+            name: mysql-initdb
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: polar-mysql
+  labels:
+    db: polar-mysql
+spec:
+  type: ClusterIP
+  selector:
+    db: polar-mysql
+  ports:
+    - protocol: TCP
+      port: 3306
+      targetPort: 3306
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mysql-initdb
+data:
+  init-db.sql: |
+    CREATE DATABASE IF NOT EXISTS catalog;
+
+    -- 사용자 생성이 이미 되어 있지 않다면 생성
+    CREATE USER IF NOT EXISTS 'user'@'%' IDENTIFIED BY '1234';
+
+    -- 사용자 권한 설정
+    GRANT ALL PRIVILEGES ON catalog.* TO 'user'@'%';
+
+    FLUSH PRIVILEGES;

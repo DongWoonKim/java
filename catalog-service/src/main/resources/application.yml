@@ -11,7 +11,7 @@ spring:
     name: catalog-service
   cloud:
     config:
-      uri: http://localhost:8888
+      uri: ${SPRING_CLOUD_CONFIG_URI:http://localhost:8888}
       request-connect-timeout: 5000
       request-read-timeout: 5000
       fail-fast: true
@@ -24,7 +24,7 @@ spring:
   config:
     import: "optional:configserver:"
   datasource:
-    url: jdbc:mysql://localhost:3307/catalog?useSSL=false&serverTimezone=UTC&characterEncoding=UTF-8&allowPublicKeyRetrieval=true
+    url: ${SPRING_DATASOURCE_URL:jdbc:mysql://localhost:3307/catalog?useSSL=false&serverTimezone=UTC&characterEncoding=UTF-8&allowPublicKeyRetrieval=true}
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: user
     password: 1234
@@ -36,10 +36,6 @@ management:
     web:
       exposure:
         include: refresh
-gradle:
-  jvmArgs: "-Xmx6g -Xms2g -XX:+HeapDumpOnOutOfMemoryError"
-  daemon: false
-  parallel: false
 
 polar:
   greeting: Welcome to the local book catalog!

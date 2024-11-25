@@ -1,0 +1,32 @@
+<!-- templates/product-update.html -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Create Catalog</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.js" crossorigin="anonymous"></script>
+    <script th:src="@{/js/createCatalog.js}"></script>
+    <link th:href="@{/css/createCatalog.css}" rel="stylesheet">
+</head>
+<body>
+<h1>Create Product</h1>
+<div>
+    <div>
+        <label>ISBN : </label>
+        <input id="isbn" type="text"/>
+    </div>
+    <div>
+        <label>TITLE : </label>
+        <input id="title" type="text"/>
+    </div>
+    <div>
+        <label>Author : </label>
+        <input id="author" type="text"/>
+    </div>
+    <div>
+        <label>Price:</label>
+        <input id="price" type="text"/>
+    </div>
+    <button id="catalogCreate">Create</button>
+</div>
+</body>
+</html>

@@ -36,6 +36,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
     implementation 'com.mysql:mysql-connector-j:8.4.0'
     implementation 'org.flywaydb:flyway-mysql'
+    implementation 'org.springframework.boot:spring-boot-starter-amqp'
 
     compileOnly 'org.projectlombok:lombok'
 

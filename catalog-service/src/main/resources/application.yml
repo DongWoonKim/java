@@ -10,6 +10,11 @@ server:
 spring:
   application:
     name: catalog-service
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: user
+    password: 1234
   lifecycle:
     timeout-per-shutdown-phase: 15s
   cloud:

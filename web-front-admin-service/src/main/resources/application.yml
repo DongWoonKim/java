@@ -4,3 +4,8 @@ server:
 spring:
   application:
     name: web-front-admin-service
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: user
+    password: 1234

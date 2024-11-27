@@ -31,4 +31,17 @@ public class CookieUtil {
             }
         }
     }
+
+    public static String getRefreshTokenFromCookies(Cookie[] cookies, String name) {
+
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals(name)) {
+                    return cookie.getValue();
+                }
+            }
+        }
+
+        return null;
+    }
 }

@@ -27,7 +27,7 @@ public class TokenApiController {
             HttpServletRequest request
     ) {
         log.info("refresh");
-        String refreshToken = getRefreshTokenFromCookies(request.getCookies());
+        String refreshToken = CookieUtil.getRefreshTokenFromCookies(request.getCookies(), "refreshToken");
 
         RefreshTokenResponseDTO refreshTokenResponseDTO = tokenService.refreshToken(refreshToken);
         if (refreshTokenResponseDTO.getStatus() == 1) {
@@ -52,17 +52,6 @@ public class TokenApiController {
         return tokenService.getAuthentication(claimsRequestDTO.getToken());
     }
 
-    private String getRefreshTokenFromCookies(Cookie[] cookies) {
 
-        if (cookies != null) {
-            for (Cookie cookie : cookies) {
-                if (cookie.getName().equals("refreshToken")) {
-                    return cookie.getValue();
-                }
-            }
-        }
-
-        return null;
-    }
 
 }

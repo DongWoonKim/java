@@ -21,4 +21,12 @@
             user_id = #{userId};
     </select>
 
+    <insert id="saveUser"
+            parameterType="User"
+            useGeneratedKeys="true"
+            keyProperty="id">
+        INSERT INTO user (user_id, password, user_name, role)
+        VALUES (#{userId}, #{password}, #{userName}, #{role});
+    </insert>
+
 </mapper>

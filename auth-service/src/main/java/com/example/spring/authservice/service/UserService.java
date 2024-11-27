@@ -1,6 +1,7 @@
 package com.example.spring.authservice.service;
 
 import com.example.spring.authservice.config.security.CustomUserDetails;
+import com.example.spring.authservice.dto.UserJoinResponseDTO;
 import com.example.spring.authservice.dto.UserLoginResponseDTO;
 import com.example.spring.authservice.mapper.UserMapper;
 import com.example.spring.authservice.model.User;
@@ -39,6 +40,17 @@ public class UserService {
                 .userId(user.getUserId())
                 .userName(user.getUserName())
                 .build();
+    }
+
+    public UserJoinResponseDTO join(User user) {
+        return userMapper.saveUser(user) == 1 ?
+                UserJoinResponseDTO.builder()
+                        .isSuccess(true)
+                        .build():
+                UserJoinResponseDTO.builder()
+                        .isSuccess(false)
+                        .build();
+
     }
 
 }

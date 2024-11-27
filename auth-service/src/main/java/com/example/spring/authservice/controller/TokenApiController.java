@@ -3,6 +3,7 @@ package com.example.spring.authservice.controller;
 import com.example.spring.authservice.dto.*;
 import com.example.spring.authservice.service.TokenService;
 import com.example.spring.authservice.utils.CookieUtil;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -23,11 +24,12 @@ public class TokenApiController {
     @PostMapping("/refresh")
     public RefreshTokenResponseDTO refreshToken(
             HttpServletResponse response,
-            HttpServletRequest request,
-            @RequestBody RefreshTokenRequestDTO refreshTokenRequestDTO
+            HttpServletRequest request
     ) {
         log.info("refresh");
-        RefreshTokenResponseDTO refreshTokenResponseDTO = tokenService.refreshToken(refreshTokenRequestDTO.getRefreshToken());
+        String refreshToken = getRefreshTokenFromCookies(request.getCookies());
+
+        RefreshTokenResponseDTO refreshTokenResponseDTO = tokenService.refreshToken(refreshToken);
         if (refreshTokenResponseDTO.getStatus() == 1) {
             CookieUtil.addCookie(response, "refreshToken", refreshTokenResponseDTO.getRefreshToken(), 7 * 24 * 60 * 60);
             refreshTokenResponseDTO.setRefreshToken(null);
@@ -48,6 +50,19 @@ public class TokenApiController {
     public ClaimsResponseDTO claims(@RequestBody ClaimsRequestDTO claimsRequestDTO) {
         log.info("claims");
         return tokenService.getAuthentication(claimsRequestDTO.getToken());
+    }
+
+    private String getRefreshTokenFromCookies(Cookie[] cookies) {
+
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("refreshToken")) {
+                    return cookie.getValue();
+                }
+            }
+        }
+
+        return null;
     }
 
 }

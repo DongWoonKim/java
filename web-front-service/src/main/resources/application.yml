@@ -1,0 +1,10 @@
+server:
+  port: 8887
+
+spring:
+  application:
+    name: web-front-service
+
+polar:
+  auth-service-url: ${AUTH_SERVICE_URL:http://localhost:9000}/auths
+  catalog-service-url: ${CATALOG_SERVICE_URL:http://localhost:9000}/books

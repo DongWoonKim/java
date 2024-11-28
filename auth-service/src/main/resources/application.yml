@@ -16,9 +16,9 @@ spring:
     user: ${spring.datasource.username}
     password: ${spring.datasource.password}
     url: ${SPRING_DATASOURCE_URL:jdbc:mysql://localhost:3307/auth?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC&characterEncoding=UTF-8}
-  mybatis:
-    mapper-locations: classpath:mappers/*.xml
-    type-aliases-package: com.example.spring.authservice.model
+mybatis:
+  mapper-locations: classpath:mappers/*.xml
+  type-aliases-package: com.example.spring.authservice.model
 jwt:
   issuer: gauri7891@gmail.com
   secret_key: pyjWTd80kOTqOrK2lhYnztUIlS3v7VxD4z1iki2XCuX7wYcXpi8XMKU15BDIit9AdZUPYDRQm7Z4r5fLPNZ7Sg==

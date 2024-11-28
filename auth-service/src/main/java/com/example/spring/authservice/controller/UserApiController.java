@@ -40,7 +40,7 @@ public class UserApiController {
 
     @PostMapping("/join")
     public UserJoinResponseDTO join(@RequestBody UserJoinRequestDTO joinRequest) {
-        log.info("join");
+        log.info("join :: {}", joinRequest);
         return userService.join( joinRequest.toUser(bCryptPasswordEncoder) );
     }
 

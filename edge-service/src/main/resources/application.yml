@@ -66,3 +66,6 @@ resilience4j:
     configs:
       default:
         timeout-duration: 5s
+
+polar:
+  auth-service-url: ${AUTH_SERVICE_URL:http://localhost:8886}/auths

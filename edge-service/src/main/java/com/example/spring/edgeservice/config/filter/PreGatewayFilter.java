@@ -10,15 +10,20 @@ import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFac
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Component;
 
 @Slf4j
 @Order(0)
 @Component
-@RequiredArgsConstructor
 public class PreGatewayFilter extends AbstractGatewayFilterFactory<PreGatewayFilter.Config> {
 
     private final AuthServiceClient authServiceClient;
+
+    public PreGatewayFilter(AuthServiceClient authServiceClient) {
+        super(Config.class);
+        this.authServiceClient = authServiceClient;
+    }
 
     @Override
     public GatewayFilter apply(Config config) {
@@ -35,9 +40,11 @@ public class PreGatewayFilter extends AbstractGatewayFilterFactory<PreGatewayFil
             return authServiceClient.validToken(token)
                     .flatMap(statusNum -> {
                         if (statusNum == 2) {
-
+                            exchange.getResponse().setStatusCode(HttpStatusCode.valueOf(config.getAuthenticationTimeoutCode()));
+                            return exchange.getResponse().setComplete();
                         } else if (statusNum == 3 || statusNum == -1) {
-
+                            exchange.getResponse().setStatusCode(HttpStatus.INTERNAL_SERVER_ERROR);
+                            return exchange.getResponse().setComplete();
                         }
 
                         return chain.filter(exchange);

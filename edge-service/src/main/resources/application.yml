@@ -42,6 +42,7 @@ spring:
           predicates:
             - Path=/books/**
           filters:
+            - name: PreGatewayFilter
             - name: CircuitBreaker
               args:
                 name: catalogCircuitBreaker
@@ -51,9 +52,18 @@ spring:
           predicates:
             - Path=/orders/**
           filters:
+            - name: PreGatewayFilter
             - name: CircuitBreaker
               args:
                 name: orderCircuitBreaker
+        - id: auth-route
+          uri: ${AUTH_SERVICE_URL:http://localhost:8886}/auths
+          predicates:
+            - Path=/auths/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: authCircuitBreaker
 resilience4j:
   circuitbreaker:
     configs:

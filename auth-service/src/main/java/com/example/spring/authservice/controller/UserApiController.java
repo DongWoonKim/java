@@ -25,7 +25,6 @@ public class UserApiController {
 
     @PostMapping("/login")
     public UserLoginResponseDTO login(
-            HttpServletRequest request,
             @RequestBody UserLoginRequestDTO loginRequest) {
         log.info("login");
         return userService.login(loginRequest.getUserId(), loginRequest.getPassword());

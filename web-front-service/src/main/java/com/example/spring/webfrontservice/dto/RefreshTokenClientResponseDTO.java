@@ -8,6 +8,7 @@ import lombok.Getter;
 public class RefreshTokenClientResponseDTO {
     private int status;
     private String accessToken;
+    private String refreshToken;
 
     public RefreshTokenResponseDTO toRefreshTokenResponseDTO() {
         return RefreshTokenResponseDTO.builder()

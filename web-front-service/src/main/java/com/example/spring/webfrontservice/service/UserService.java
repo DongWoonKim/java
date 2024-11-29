@@ -5,6 +5,8 @@ import com.example.spring.webfrontservice.dto.JoinClientResponseDTO;
 import com.example.spring.webfrontservice.dto.JoinRequestDTO;
 import com.example.spring.webfrontservice.dto.LoginClientResponseDTO;
 import com.example.spring.webfrontservice.dto.LoginRequestDTO;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +20,9 @@ public class UserService {
         return authClient.join(joinRequestDTO);
     }
 
-    public LoginClientResponseDTO login(LoginRequestDTO loginRequestDTO) {
+    public LoginClientResponseDTO login(
+            LoginRequestDTO loginRequestDTO
+    ) {
         return authClient.login(loginRequestDTO);
     }
 

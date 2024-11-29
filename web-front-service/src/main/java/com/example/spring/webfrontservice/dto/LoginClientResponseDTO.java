@@ -8,6 +8,7 @@ public class LoginClientResponseDTO {
     private String userName;
     private String userId;
     private String accessToken;
+    private String refreshToken;
 
     public LoginResponseDTO toLoginResponseDTO() {
         return LoginResponseDTO.builder()

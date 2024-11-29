@@ -12,8 +12,8 @@ public interface AuthClient {
     JoinClientResponseDTO join(@RequestBody JoinRequestDTO joinRequestDTO);
 
     @PostMapping("/login")
-    LoginClientResponseDTO login(@RequestBody LoginRequestDTO loginRequestDTO);
+    LoginClientResponseDTO login( @RequestBody LoginRequestDTO loginRequestDTO);
 
     @PostMapping("/refresh")
-    RefreshTokenClientResponseDTO refresh();
+    RefreshTokenClientResponseDTO refresh(@RequestBody RefreshTokenRequestDTO refreshTokenRequestDTO);
 }

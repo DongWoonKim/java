@@ -2,6 +2,9 @@ package com.example.spring.webfrontservice.controller;
 
 import com.example.spring.webfrontservice.dto.*;
 import com.example.spring.webfrontservice.service.UserService;
+import com.example.spring.webfrontservice.util.CookieUtil;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,8 +24,18 @@ public class UserApiController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<LoginResponseDTO> login(@RequestBody LoginRequestDTO loginRequestDTO) {
+    public ResponseEntity<LoginResponseDTO> login(
+            HttpServletResponse response,
+            @RequestBody LoginRequestDTO loginRequestDTO
+    ) {
         LoginClientResponseDTO logined = userService.login(loginRequestDTO);
+
+        if (logined != null && logined.isLoggedIn()) {
+            // Refresh Token을 HttpOnly 쿠키에 저장
+            CookieUtil.addCookie(response, "refreshToken", logined.getRefreshToken(), 7 * 24 * 60 * 60);
+        }
+
+        assert logined != null;
         return ResponseEntity.ok(logined.toLoginResponseDTO());
     }
 

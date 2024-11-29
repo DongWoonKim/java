@@ -1,4 +1,4 @@
-package com.example.spring.authservice.utils;
+package com.example.spring.webfrontservice.util;
 
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
@@ -32,7 +32,7 @@ public class CookieUtil {
         }
     }
 
-    public static String getRefreshTokenFromCookies(Cookie[] cookies, String name) {
+    public static String getTokenFromCookies(Cookie[] cookies, String name) {
 
         if (cookies != null) {
             for (Cookie cookie : cookies) {

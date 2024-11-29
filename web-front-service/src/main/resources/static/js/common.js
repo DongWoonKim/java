@@ -29,15 +29,23 @@ let handleTokenExpiration = () => {
         },
         success: (response) => {
             console.log('res :: ', response.accessToken)
-            // 새로운 Access Token을 로컬스토리지에 저장
-            localStorage.setItem('accessToken', response.accessToken);
+            if (response.status === 1) {
+                // 새로운 Access Token을 로컬스토리지에 저장
+                localStorage.setItem('accessToken', response.accessToken);
+            } else {
+                failed();
+            }
         },
         error: (error) => {
             // 실패 시 기본 동작
-            alert('로그인이 필요합니다. 다시 로그인해주세요.');
-            localStorage.removeItem('accessToken');
-            window.location.href = '/webs/login';
+            failed();
         }
     });
+}
+
+let failed = () => {
+    alert('로그인이 필요합니다. 다시 로그인해주세요.');
+    localStorage.removeItem('accessToken');
+    window.location.href = '/webs/login';
 }
 

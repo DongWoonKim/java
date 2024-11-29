@@ -1,9 +1,6 @@
 package com.example.spring.webfrontservice.client;
 
-import com.example.spring.webfrontservice.dto.JoinClientResponseDTO;
-import com.example.spring.webfrontservice.dto.JoinRequestDTO;
-import com.example.spring.webfrontservice.dto.LoginClientResponseDTO;
-import com.example.spring.webfrontservice.dto.LoginRequestDTO;
+import com.example.spring.webfrontservice.dto.*;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,4 +14,6 @@ public interface AuthClient {
     @PostMapping("/login")
     LoginClientResponseDTO login(@RequestBody LoginRequestDTO loginRequestDTO);
 
+    @PostMapping("/refresh")
+    RefreshTokenClientResponseDTO refresh();
 }

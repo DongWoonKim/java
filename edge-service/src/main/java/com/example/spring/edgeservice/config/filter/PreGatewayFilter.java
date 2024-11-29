@@ -32,7 +32,7 @@ public class PreGatewayFilter extends AbstractGatewayFilterFactory<PreGatewayFil
             log.info("token: {}", token);
 
             // 토큰 유효성 검사
-            if (token != null && token.startsWith(config.getTokenPrefix())) {
+            if (token != null && !token.startsWith(config.getTokenPrefix())) {
                 exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
                 return exchange.getResponse().setComplete();
             }

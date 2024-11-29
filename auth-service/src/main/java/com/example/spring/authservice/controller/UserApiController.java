@@ -5,8 +5,7 @@ import com.example.spring.authservice.dto.UserJoinResponseDTO;
 import com.example.spring.authservice.dto.UserLoginRequestDTO;
 import com.example.spring.authservice.dto.UserLoginResponseDTO;
 import com.example.spring.authservice.service.UserService;
-import com.example.spring.authservice.utils.CookieUtil;
-import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -26,16 +25,10 @@ public class UserApiController {
 
     @PostMapping("/login")
     public UserLoginResponseDTO login(
-            HttpServletResponse response,
-            @RequestBody UserLoginRequestDTO loginRequest
-    ) {
+            HttpServletRequest request,
+            @RequestBody UserLoginRequestDTO loginRequest) {
         log.info("login");
-        UserLoginResponseDTO logined = userService.login(loginRequest.getUserId(), loginRequest.getPassword());
-
-        CookieUtil.addCookie(response, "refreshToken", logined.getRefreshToken(), 7 * 24 * 60 * 60);
-        logined.setRefreshToken(null);
-
-        return logined;
+        return userService.login(loginRequest.getUserId(), loginRequest.getPassword());
     }
 
     @PostMapping("/join")

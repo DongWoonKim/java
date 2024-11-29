@@ -2,10 +2,6 @@ package com.example.spring.authservice.controller;
 
 import com.example.spring.authservice.dto.*;
 import com.example.spring.authservice.service.TokenService;
-import com.example.spring.authservice.utils.CookieUtil;
-import jakarta.servlet.http.Cookie;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,22 +18,9 @@ public class TokenApiController {
     private final TokenService tokenService;
 
     @PostMapping("/refresh")
-    public RefreshTokenResponseDTO refreshToken(
-            HttpServletResponse response,
-            HttpServletRequest request
-    ) {
+    public RefreshTokenResponseDTO refreshToken(@RequestBody RefreshTokenRequestDTO refreshTokenRequestDTO) {
         log.info("refresh");
-        String refreshToken = CookieUtil.getRefreshTokenFromCookies(request.getCookies(), "refreshToken");
-
-        RefreshTokenResponseDTO refreshTokenResponseDTO = tokenService.refreshToken(refreshToken);
-        if (refreshTokenResponseDTO.getStatus() == 1) {
-            CookieUtil.addCookie(response, "refreshToken", refreshTokenResponseDTO.getRefreshToken(), 7 * 24 * 60 * 60);
-            refreshTokenResponseDTO.setRefreshToken(null);
-        } else {
-            CookieUtil.deleteCookie(request, response, "refreshToken");
-        }
-
-        return refreshTokenResponseDTO;
+        return tokenService.refreshToken(refreshTokenRequestDTO.getRefreshToken());
     }
 
     @PostMapping("/validToken")

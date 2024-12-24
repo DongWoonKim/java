@@ -16,13 +16,7 @@ spec:
       containers:
         - name: polar-mysql
           image: mysql:latest
-          env:
-            - name: MYSQL_USER
-              value: user
-            - name: MYSQL_PASSWORD
-              value: "1234"
-            - name: MYSQL_DATABASE
-              value: catalog
+          env:   
             - name: MYSQL_ROOT_PASSWORD
               value: "1234"
           resources:
@@ -64,11 +58,4 @@ metadata:
 data:
   init-db.sql: |
     CREATE DATABASE IF NOT EXISTS catalog;
-
-    -- 사용자 생성이 이미 되어 있지 않다면 생성
-    CREATE USER IF NOT EXISTS 'user'@'%' IDENTIFIED BY '1234';
-
-    -- 사용자 권한 설정
-    GRANT ALL PRIVILEGES ON catalog.* TO 'user'@'%';
-
-    FLUSH PRIVILEGES;
+    CREATE DATABASE IF NOT EXISTS `order`; 

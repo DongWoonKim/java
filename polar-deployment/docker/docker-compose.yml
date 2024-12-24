@@ -21,6 +21,28 @@ services:
       - SPRING_DATASOURCE_URL=jdbc:mysql://polar-mysql:3306/catalog?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC&characterEncoding=UTF-8
       - SPRING_PROFILES_ACTIVE=testdata 
 
+  order-service: 
+    build:
+      context: C:/Users/cheoho-hi/Desktop/java/order-service
+      dockerfile: Dockerfile   
+    depends_on:
+      - polar-mysql
+    image: "order-service"
+    container_name: "order-service"
+    ports:
+      - 9002:9002
+      - 8002:8002 
+      
+  edge-service: 
+    build:
+      context: C:/Users/cheoho-hi/Desktop/java/edge-service
+      dockerfile: Dockerfile  
+    image: "edge-service"
+    container_name: "edge-service"
+    ports:
+      - 9000:9000
+      - 8000:8000    
+
   # Backing Services
   polar-mysql:
     image: "mysql:latest" # 최신 버전으로 업데이트
@@ -31,4 +53,16 @@ services:
       - MYSQL_ROOT_PASSWORD=1234     
     volumes:
       - ./mysql/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  polar-rabbitmq:
+    image: "rabbitmq:management"
+    container_name: "polar-rabbitmq"
+    ports:
+      - 5672:5672
+      - 15672:15672
+    environment:
+      - RABBITMQ_DEFAULT_USER=user
+      - RABBITMQ_DEFAULT_PASS=1234
+    volumes:
+      - ./rabbitmq/rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf
   

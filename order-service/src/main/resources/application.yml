@@ -23,4 +23,4 @@ spring:
     url: ${SPRING_FLYWAY_URL:jdbc:mysql://localhost:3307/order}
 
 polar:
-  catalog-service-uri: ${CATALOG_SERVICE_URL:"http://localhost:9001"}
+  catalog-service-uri: ${CATALOG_SERVICE_URL:http://localhost:9001}
